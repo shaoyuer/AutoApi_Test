@@ -72,7 +72,7 @@ for a in range(1, int(app_num)+1):
 
 #获取天气
 headers={'Accept-Language': 'zh-CN'}
-weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
+weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers)
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
