@@ -76,5 +76,5 @@ weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
-    #SendEmail(a)
+    SendEmail(a)
     
