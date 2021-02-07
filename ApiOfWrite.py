@@ -5,6 +5,7 @@ import json,sys,time,random
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -55,7 +56,7 @@ def SendEmail(a):
             }
     mailmessage={'message': {'subject': 'Weather',
                              'body': {'contentType': 'Text', 'content': weather},
-                             'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
+                             'toRecipients': [{'emailAddress': {'address': emailaddress}}],
                              },
                  'saveToSentItems': 'true'}
     if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=json.dumps(mailmessage)).status_code < 300:
@@ -76,5 +77,6 @@ weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
-    SendEmail(a)
+    if emailaddress != '':
+        SendEmail(a)
     
