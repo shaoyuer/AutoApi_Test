@@ -3,8 +3,8 @@ import os
 import requests as req
 import json,sys,time,random
 
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
