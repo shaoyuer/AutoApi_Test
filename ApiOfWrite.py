@@ -54,7 +54,7 @@ def SendEmail(a):
             'Content-Type': 'application/json'
             }
     mailmessage={'message': {'subject': 'Weather',
-                             'body': {'contentType': 'Text', 'content': weather},
+                             'body': {'contentType': 'Html', 'content': weather},
                              'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
                  'saveToSentItems': 'true'}
