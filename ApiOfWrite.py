@@ -80,6 +80,7 @@ for a in range(1, int(app_num)+1):
     print('上传xlsx文件')
     with open(path, 'rb') as f:
         UploadFile(a,'AutoApi.xlsx',f)
+    print('上传随机Txt文件')
     UploadFile(a,'log.txt',weather)
     if emailaddress != '':
         SendEmail(a,weather)
