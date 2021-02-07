@@ -26,7 +26,7 @@ def getmstoken(ms_token,appnum):
     if 'refresh_token' in jsontxt:
         print(r'账号/应用 '+str(appnum)+' 的微软密钥获取成功')
     else:
-        print(r'账号/应用 '+str(appnum)+' 的微软密钥获取失败'+'\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
+        print(r'账号/应用 '+str(appnum)+' 的微软密钥获取失败\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
     refresh_token = jsontxt['refresh_token']
     access_token = jsontxt['access_token']
     return access_token
@@ -39,7 +39,7 @@ def UploadFile(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=str(weather)).status_code < 300:
+    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=weather.text).status_code < 300:
         print('文件上传onedrive成功')
     else:
         print('文件上传onedrive失败')
@@ -51,13 +51,12 @@ def SendEmail(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    ToRecipients= [r"{'EmailAddress': {'Address': wz.lxh@outlook.com}}"]
-    mailmessage={'Message': {'Subject': 'Weather',
-                             'Body': {'ContentType': 'Text', 'Content': str(weather)},
-                             'ToRecipients': ToRecipients,
+    mailmessage={'message': {'subject': 'Weather',
+                             'body': {'contentType': 'Text', 'content': weather.text},
+                             'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
-                 'SaveToSentItems': 'true'}
-    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage).status_code < 300:
+                 'saveToSentItems': 'true'}
+    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=str(mailmessage)).status_code < 300:
         print('邮件发送成功')
     else:
         print('邮件发送失败')
@@ -71,6 +70,7 @@ for a in range(1, int(app_num)+1):
 
 #获取天气
 weather=req.get(r'http://wttr.in/'+city)
+weather.encoding'utf-8'
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
