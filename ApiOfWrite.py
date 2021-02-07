@@ -54,7 +54,7 @@ def SendEmail(a):
             'Content-Type': 'application/json'
             }
     mailmessage={'message': {'subject': 'Weather',
-                             'body': {'contentType': 'Html', 'content': weather},
+                             'body': {'contentType': 'Text', 'content': weather},
                              'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
                  'saveToSentItems': 'true'}
@@ -72,7 +72,7 @@ for a in range(1, int(app_num)+1):
 
 #获取天气
 headers={'Accept-Language': 'zh-CN'}
-weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).content.decode('utf-8')
+weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
