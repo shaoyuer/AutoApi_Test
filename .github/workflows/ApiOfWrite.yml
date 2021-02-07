@@ -27,6 +27,7 @@ jobs:
     - name: run api #api调用
       env: 
         CITY: ${{ secrets.CITY }} 
+        EMAIL: ${{ secrets.EMAIL }} 
         #github的账号信息
         GH_TOKEN: ${{ secrets.GH_TOKEN }} 
         GH_REPO: ${{ github.repository }}
