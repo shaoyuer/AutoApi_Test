@@ -71,11 +71,10 @@ for a in range(1, int(app_num)+1):
     access_token_list[a-1]=getmstoken(ms_token,a)
 
 #获取天气
-headers={'Accept-Language': 'zh-CN',
-         'User-Agent': r"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" }
+headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
-    SendEmail(a)
+    #SendEmail(a)
     
