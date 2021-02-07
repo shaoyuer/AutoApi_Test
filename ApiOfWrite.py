@@ -39,7 +39,7 @@ def UploadFile(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=str(weather)).status_code < 300:
+    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=weather.text).status_code < 300:
         print('文件上传onedrive成功')
     else:
         print('文件上传onedrive失败')
@@ -51,24 +51,14 @@ def SendEmail(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    data={
-  "message": {
-    "subject": "Weather",
-    "body": {
-      "contentType": "Text",
-      "content": str(weather),
-    },
-    "toRecipients": [
-      {
-        "emailAddress": {
-          "address": "wz.lxh@outlook.com"
-        }
-      }
-    ],
-  },
-  "saveToSentItems": "false"
-}
-    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=data).status_code < 300:
+    ToRecipients= [{'EmailAddress': {'Address': wz.lxh@outlook.com}}
+                  ]
+    mailmessage={'Message': {'Subject': 'Weather',
+                             'Body': {'ContentType': 'Text', 'Content': weather.text},
+                             'ToRecipients': ToRecipients,
+                             }
+                 'SaveToSentItems': 'true'}
+    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage).status_code < 300:
         print('邮件发送成功')
     else:
         print('邮件发送失败')
