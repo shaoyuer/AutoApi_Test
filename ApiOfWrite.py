@@ -5,7 +5,7 @@ import json,sys,time,random
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-path=sys.path[0]+r'/AutoApi,xlsx'
+path=sys.path[0]+r'/AutoApi.xlsx'
 emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
