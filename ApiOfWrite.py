@@ -70,7 +70,7 @@ for a in range(1, int(app_num)+1):
 
 #获取天气
 weather=req.get(r'http://wttr.in/'+city)
-weather.encoding'utf-8'
+weather.encoding='utf-8'
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
