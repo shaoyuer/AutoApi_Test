@@ -39,7 +39,7 @@ def UploadFile(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=weather.text).status_code < 300:
+    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=str(weather)).status_code < 300:
         print('文件上传onedrive成功')
     else:
         print('文件上传onedrive失败')
@@ -53,7 +53,7 @@ def SendEmail(a):
             }
     ToRecipients= [r"{'EmailAddress': {'Address': wz.lxh@outlook.com}}"]
     mailmessage={'Message': {'Subject': 'Weather',
-                             'Body': {'ContentType': 'Text', 'Content': weather.text},
+                             'Body': {'ContentType': 'Text', 'Content': str(weather)},
                              'ToRecipients': ToRecipients,
                              },
                  'SaveToSentItems': 'true'}
