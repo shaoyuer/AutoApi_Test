@@ -2,7 +2,8 @@
 import os
 import requests as req
 import json,sys,time,random
-
+reload(sys)
+sys.setdefaultencoding('utf-8')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -70,7 +71,6 @@ for a in range(1, int(app_num)+1):
 
 #获取天气
 weather=req.get(r'http://wttr.in/'+city)
-weather.encoding='utf-8'
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
