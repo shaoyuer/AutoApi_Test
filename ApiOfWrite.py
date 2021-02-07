@@ -54,11 +54,11 @@ def SendEmail(a):
             'Content-Type': 'application/json'
             }
     mailmessage={'message': {'subject': 'Weather',
-                             'body': {'contentType': 'Text', 'content': weather.text},
+                             'body': {'contentType': 'Text', 'content': 'text for test'},
                              'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
                  'saveToSentItems': 'true'}
-    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=str(mailmessage)).status_code < 300:
+    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage,format='json').status_code < 300:
         print('邮件发送成功')
     else:
         print('邮件发送失败')
