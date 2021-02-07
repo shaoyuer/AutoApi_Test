@@ -6,7 +6,7 @@ import json,sys,time,random
 reload(sys)
 sys.setdefaultencoding('utf-8')
 path=sys.path[0]+r'/AutoApi.xlsx'
-emailaddress=os.getenv('EMAIL')
+email_address=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -49,7 +49,7 @@ def UploadFile(a,filesname,f):
         print('文件上传onedrive失败')
         
 # 发送天气邮件到自定义邮箱
-def SendEmail(a,content):
+def SendEmail(a,content,email_address):
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
@@ -57,7 +57,7 @@ def SendEmail(a,content):
             }
     mailmessage={'message': {'subject': 'Weather',
                              'body': {'contentType': 'Text', 'content': content},
-                             'toRecipients': [{'emailAddress': {'address': emailaddress}}],
+                             'toRecipients': [{'emailAddress': {'address': email_address}}],
                              },
                  'saveToSentItems': 'true'}
     if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=json.dumps(mailmessage)).status_code < 300:
@@ -82,6 +82,6 @@ for a in range(1, int(app_num)+1):
         UploadFile(a,'AutoApi.xlsx',f)
     print('上传随机Txt文件')
     UploadFile(a,'log.txt',weather)
-    if emailaddress != '':
-        SendEmail(a,weather)
+    if email_address != '':
+        SendEmail(a,weather,email_address)
     
