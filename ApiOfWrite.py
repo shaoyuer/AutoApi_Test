@@ -58,7 +58,7 @@ def SendEmail(a):
                              'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
                  'saveToSentItems': 'true'}
-    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage).status_code < 300:
+    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=str(mailmessage)).status_code < 300:
         print('邮件发送成功')
     else:
         print('邮件发送失败')
