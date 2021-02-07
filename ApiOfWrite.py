@@ -2,8 +2,9 @@
 import os
 import requests as req
 import json,sys,time,random
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
+
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -57,7 +58,7 @@ def SendEmail(a):
                              'toRecipients': [{'emailAddress': {'address': 'wz.lxh@outlook.com'}}],
                              },
                  'saveToSentItems': 'true'}
-    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=str(mailmessage)).status_code < 300:
+    if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage).status_code < 300:
         print('邮件发送成功')
     else:
         print('邮件发送失败')
@@ -70,7 +71,9 @@ for a in range(1, int(app_num)+1):
     access_token_list[a-1]=getmstoken(ms_token,a)
 
 #获取天气
-weather=req.get(r'http://wttr.in/'+city)
+headers={'Accept-Language': 'zh-CN',
+         'User-Agent': r"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" }
+weather=req.get(r'http://wttr.in/'+city,headers=headers)
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
