@@ -5,6 +5,7 @@ import json,sys,time,random
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+path=sys.path[0]+r'/AutoApi,xlsx'
 emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
@@ -34,28 +35,28 @@ def getmstoken(ms_token,appnum):
     access_token = jsontxt['access_token']
     return access_token
 
-#上传天气文件到onedrive
-def UploadFile(a):
+#上传文件到onedrive
+def UploadFile(a,filesname,f):
     localtime = time.asctime( time.localtime(time.time()) )
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/log.txt:/content',headers=headers,data=weather).status_code < 300:
+    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/'+filesname+r':/content',headers=headers,data=f).status_code < 300:
         print('文件上传onedrive成功')
     else:
         print('文件上传onedrive失败')
         
 # 发送天气邮件到自定义邮箱
-def SendEmail(a):
+def SendEmail(a,content):
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
     mailmessage={'message': {'subject': 'Weather',
-                             'body': {'contentType': 'Text', 'content': weather},
+                             'body': {'contentType': 'Text', 'content': content},
                              'toRecipients': [{'emailAddress': {'address': emailaddress}}],
                              },
                  'saveToSentItems': 'true'}
@@ -76,7 +77,10 @@ headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
-    UploadFile(a)
+    print('上传xlsx文件')
+    with open(path, 'rb') as f:
+        UploadFile(a,'AutoApi.xlsx',f)
+    UploadFile(a,'log.txt',weather)
     if emailaddress != '':
-        SendEmail(a)
+        SendEmail(a,weather)
     
