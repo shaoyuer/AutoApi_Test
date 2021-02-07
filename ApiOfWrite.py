@@ -44,9 +44,9 @@ def UploadFile(a,filesname,f):
             'Content-Type': 'application/json'
             }
     if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/'+filesname+r':/content',headers=headers,data=f).status_code < 300:
-        print('文件上传onedrive成功')
+        print('文件上传onedrive成功\n')
     else:
-        print('文件上传onedrive失败')
+        print('文件上传onedrive失败\n')
         
 # 发送天气邮件到自定义邮箱
 def SendEmail(a,content,email_address):
@@ -72,15 +72,16 @@ for a in range(1, int(app_num)+1):
     ms_token=os.getenv('MS_TOKEN_'+str(a))
     access_token_list[a-1]=getmstoken(ms_token,a)
 
-#获取天气
+#获取天气(待优化)
 headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?m',headers=headers).text
         
 for a in range(1, int(app_num)+1):
     print('上传xlsx文件')
+    #上传excel文件是为了能运行excel的api
     with open(path, 'rb') as f:
         UploadFile(a,'AutoApi.xlsx',f)
-    print('上传随机Txt文件')
+    print('上传随机txt文件')
     UploadFile(a,'log.txt',weather)
     if email_address != '':
         SendEmail(a,weather,email_address)
