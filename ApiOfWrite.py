@@ -3,8 +3,8 @@ import os
 import requests as req
 import json,sys,time,random
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -74,7 +74,7 @@ for a in range(1, int(app_num)+1):
 headers={'Accept-Language': 'zh-CN',
          'User-Agent': r"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" }
 weather=req.get(r'http://wttr.in/'+city,headers=headers)
-weather.encoding='utf-8'
+weather=weather.content.decode('utf-8'))
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
