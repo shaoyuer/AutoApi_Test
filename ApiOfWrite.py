@@ -51,8 +51,7 @@ def SendEmail(a):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    ToRecipients= [{'EmailAddress': {'Address': wz.lxh@outlook.com}}
-                  ]
+    ToRecipients= [r"{'EmailAddress': {'Address': wz.lxh@outlook.com}}"]
     mailmessage={'Message': {'Subject': 'Weather',
                              'Body': {'ContentType': 'Text', 'Content': weather.text},
                              'ToRecipients': ToRecipients,
