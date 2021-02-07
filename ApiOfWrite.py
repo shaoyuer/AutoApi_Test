@@ -55,7 +55,7 @@ def SendEmail(a):
     mailmessage={'Message': {'Subject': 'Weather',
                              'Body': {'ContentType': 'Text', 'Content': weather.text},
                              'ToRecipients': ToRecipients,
-                             }
+                             },
                  'SaveToSentItems': 'true'}
     if req.post(r'https://graph.microsoft.com/v1.0/me/sendMail',headers=headers,data=mailmessage).status_code < 300:
         print('邮件发送成功')
