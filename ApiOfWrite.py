@@ -81,7 +81,7 @@ for a in range(1, int(app_num)+1):
     access_token_list[a-1]=getmstoken(ms_token,a)
 
 #获取天气
-weather=req.get(r'http://wttr.in/'+os.getenv('CITY'))
+weather=req.get(r'http://wttr.in/'+city)
         
 for a in range(1, int(app_num)+1):
     UploadFile(a)
