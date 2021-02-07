@@ -26,6 +26,7 @@ jobs:
         pip install requests
     - name: run api #api调用
       env: 
+        CITY: ${{ secrets.CITY }} 
         #github的账号信息
         GH_TOKEN: ${{ secrets.GH_TOKEN }} 
         GH_REPO: ${{ github.repository }}
