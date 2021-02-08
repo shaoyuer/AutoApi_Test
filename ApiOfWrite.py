@@ -64,10 +64,10 @@ def apiDelete(a,url):
         print('    操作失败')
 
 #上传文件到onedrive(小于4M)
-def UploadFile(a,filesname,f):
+def UploadFile(a,filesname,path):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
-    data = f
-    apiPost(a,data,url)
+    with open(path,'rb') as f:
+        apiPost(a,f,url)
         
 # 发送邮件到自定义邮箱
 def SendEmail(a,subject,content):
@@ -159,8 +159,7 @@ for a in range(1, int(app_num)+1):
     xls.close()
     xlspath=sys.path[0]+r'/'+filesname
     print('可能会偶尔出现创建上传失败的情况\n'+'上传随机文件到onedrive')
-    with open(xlspath, 'rb') as f:
-        UploadFile(a,filesname,f)
+    UploadFile(a,filesname,xlspath)
     print('发送邮件')
     if emailaddress != '':
         SendEmail(a,'weather',weather)
