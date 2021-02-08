@@ -92,9 +92,8 @@ def excelWrite(a,filesname,sheet):
          }
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print(jsontxt['id'])
     print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id'][0]+r'/rows/add'
     data={
           "values": [
           [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
@@ -150,7 +149,7 @@ def onenoteWrite(a,notename):
     notetxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    删除笔记本')
     print(notetxt['id'])
-    url=r'https://graph.microsoft.com/v1.0/me/drive/items/'+notetxt['id']
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/Notebooks/'+notename
     apiReq('delete',a,url)
     
 #一次性获取access_token，降低获取率
