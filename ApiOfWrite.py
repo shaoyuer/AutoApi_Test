@@ -114,6 +114,7 @@ def taskWrite(a,taskname):
     apiReq('delete',a,url)    
     
 def teamWrite(a,channelname):
+    url=r'https://graph.microsoft.com/v1.0/me/joinedTeams'
     jsontxt = json.loads(apiReq('get',a,url))
     objectlist=jsontxt['value']
     #创建
