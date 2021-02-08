@@ -65,9 +65,18 @@ def apiDelete(a,url):
 
 #上传文件到onedrive(小于4M)
 def UploadFile(a,filesname,path):
+    access_token=access_token_list[a-1]
+    headers={
+            'Authorization': 'bearer ' + access_token,
+            'Content-Type': 'application/json'
+            }
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
     with open(path,'rb') as f:
-        apiPost(a,f,url)
+        posttext=req.post(url,headers=headers,data=f)
+        if posttext.status_code < 300:
+           print('    操作成功')
+        else:
+           print('    操作失败')
         
 # 发送邮件到自定义邮箱
 def SendEmail(a,subject,content):
