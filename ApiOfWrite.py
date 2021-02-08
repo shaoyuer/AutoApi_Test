@@ -50,20 +50,18 @@ def apiReq(method,a,url,data='QAQ'):
         posttext=req.delete(url,headers=headers)
     else :
         posttext=req.get(url,headers=headers)
-    if posttext.status_code < 300:
-        print('        操作成功')
-    else:
+#    if posttext.status_code < 300:
+#        print('        操作成功')
+#    else:
+#        print('        操作失败')
+    if posttext.status_code > 300:
         print('        操作失败')
+        #成功不提示
     return posttext.text
           
 
 #上传文件到onedrive(小于4M)
 def UploadFile(a,filesname,f):
-    access_token=access_token_list[a-1]
-    headers={
-            'Authorization': 'bearer ' + access_token,
-            'Content-Type': 'application/json'
-            }
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/content'
     apiReq('put',a,url,f)
     
@@ -93,6 +91,15 @@ def excelWrite(a,filesname,sheet):
          "hasHeaders": False
          }
     print('    添加表格')
+    jsontxt=json.load(apiReq('post',a,url,json.dumps(data)))
+    print('    添加行')
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables/'+jsontxt['id']+r'/rows/add'
+    data={
+          "values": [
+          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
+          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)]
+          ]
+         }
     apiReq('post',a,url,json.dumps(data))
     
 def taskWrite(a,taskname):
@@ -131,7 +138,18 @@ def teamWrite(a,channelname):
     jsontxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels/'+jsontxt['id']
     print("    删除team频道")
-    apiReq('delete',a,url)      
+    apiReq('delete',a,url)
+
+def onenoteWrite(a,notename):
+    url=r'https://graph.microsoft.com/v1.0/me/onenote/notebooks'
+    data={
+         "displayName": notename
+         }
+    print('    创建笔记本')
+    notetxt = json.loads(apiReq('post',a,url,json.dumps(data)))
+    print('    删除笔记本')
+    url=r'https://graph.microsoft.com/v1.0//me/drive/items/'+notetxt['id']
+    apiReq('delete',a,url)
     
 #一次性获取access_token，降低获取率
 for a in range(1, int(app_num)+1):
@@ -166,3 +184,4 @@ for a in range(1, int(app_num)+1):
     if config == 'Y' or choosenum == 1:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
+    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
