@@ -91,13 +91,9 @@ def excelWrite(a,filesname,sheet):
          "hasHeaders": False
          }
     print('    添加表格')
-#    jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print(apiReq('post',a,url,json.dumps(data)))
-#    print(str(jsontxt))
-#    print(jsontxt[id])    
-#    print(jsontxt['id'][0])
-#    print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id'][0]+r'/rows/add'
+    jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
+    print('    添加行')
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['name']+r'/rows/add'
     data={
           "values": [
           [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
