@@ -92,7 +92,7 @@ def excelWrite(a,filesname,sheet):
          }
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print(jsontxt)
+    print(jsontxt['id'])
     print('    添加行')
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
     data={
@@ -141,7 +141,7 @@ def teamWrite(a,channelname):
     print("    删除team频道")
     apiReq('delete',a,url)
 
-def onenoteWrite(a,notename):
+#def onenoteWrite(a,notename):
     url=r'https://graph.microsoft.com/v1.0/me/onenote/notebooks'
     data={
          "displayName": notename
@@ -149,6 +149,7 @@ def onenoteWrite(a,notename):
     print('    创建笔记本')
     notetxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    删除笔记本')
+    print(notetxt['id'])
     url=r'https://graph.microsoft.com/v1.0/me/drive/items/'+notetxt['id']
     apiReq('delete',a,url)
     
@@ -185,4 +186,4 @@ for a in range(1, int(app_num)+1):
     if config == 'Y' or choosenum == 1:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
-    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+#    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
