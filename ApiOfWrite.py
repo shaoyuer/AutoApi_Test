@@ -51,9 +51,9 @@ def apiReq(method,a,url,data='QAQ'):
     else :
         posttext=req.get(url,headers=headers)
     if posttext.status_code < 300:
-        print('    操作成功')
+        print('        操作成功')
     else:
-        print('    操作失败')
+        print('        操作失败')
     return posttext.text
           
 
@@ -85,14 +85,14 @@ def excelWrite(a,filesname,sheet):
     data={
          "name": sheet
          }
-    print('  添加工作表')
+    print('    添加工作表')
     apiReq('post',a,url,json.dumps(data))
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
-         "hasHeaders": 'false',
+         "hasHeaders": False,
          }
-    print('  添加表格')
+    print('    添加表格')
     apiReq('post',a,url,json.dumps(data))
     
 def taskWrite(a,taskname):
@@ -100,24 +100,28 @@ def taskWrite(a,taskname):
     data={
          "displayName": taskname
          }
+    print("    创建任务列表")
     listjson=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print(str(listjson))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks'
     data={
          "title": taskname,
          }
+    print("    创建任务")
     taskjson=json.loads(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks/'+taskjson['id']
+    print("    删除任务")
     apiReq('delete',a,url)
-    url=r'https://graph.microsoft.com/v1.0/me/todo/lists'+listjson['id']
+    url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']
+    print("    删除任务列表")
     apiReq('delete',a,url)    
     
 def teamWrite(a,channelname):
     url=r'https://graph.microsoft.com/v1.0/me/joinedTeams'
+    print("    获取team")
     jsontxt = json.loads(apiReq('get',a,url))
     objectlist=jsontxt['value']
     #创建
-    print("  创建team频道")
+    print("    创建team频道")
     data={
          "displayName": channelname,
          "description": "This channel is where we debate all future architecture plans",
@@ -126,7 +130,7 @@ def teamWrite(a,channelname):
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels'
     jsontxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels/'+jsontxt['id']
-    print("  删除team频道")
+    print("    删除team频道")
     apiReq('delete',a,url)      
     
 #一次性获取access_token，降低获取率
@@ -157,9 +161,9 @@ for a in range(1, int(app_num)+1):
         print('excel文件操作')
         time.sleep(120)
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-#    if config == 'Y' or choosenum == 2:
-#        print('team操作')
-#        teamWrite(a,'QVQ'+str(random.randint(1,600)))
+    if config == 'Y' or choosenum == 2:
+        print('team操作')
+        teamWrite(a,'QVQ'+str(random.randint(1,600)))
     if config == 'Y' or choosenum == 1:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
