@@ -1,4 +1,4 @@
-# AutoApiP ———— E5自动续期
+# AutoApiP 2.0 ———— E5自动续期
 AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApiP
 
 ## 说明 ##
@@ -47,15 +47,15 @@ AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApi
     * 4）点击左边管理的**API权限**，点击+**添加权限**，点击常用Microsoft API里的**Microsoft Graph**(就是那个蓝色水晶)，
     点击**委托的权限**，然后在下面的条例选中下列需要的权限，最后点击底部**添加权限**
     
-    **赋予api权限的时候，选择以下几个（全选Read也行）**
+    **赋予api权限的时候，选择以下几个**
   
                 Calendars.ReadWrite、Contacts.ReadWrite、Directory.ReadWrite.All、
                 
                 Files.ReadWrite.All、MailboxSettings.ReadWrite、Mail.ReadWrite、
                 
-                Notes.ReadWrite.All、People.Read.All、Sites.ReadWrite.All、
+                Mail.Send、Notes.ReadWrite.All、People.Read.All、
                 
-                Tasks.ReadWrite、User.ReadWrite.All
+                Sites.ReadWrite.All、Tasks.ReadWrite、User.ReadWrite.All
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/creatapp5.png)
     
@@ -103,7 +103,7 @@ AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApi
   
  * **第三步，新建secret**
  
-    * 1）依次点击页面上栏右边的 Setting -> 左栏 Secrets -> 右上 New repository secret，新建4个secret： **GH_TOKEN、MS_TOKEN、CLIENT_ID、CLIENT_SECRET**  
+    * 1）依次点击页面上栏右边的 Setting -> 左栏 Secrets -> 右上 New repository secret，新建6个secret： **GH_TOKEN、MS_TOKEN、CLIENT_ID、CLIENT_SECRET、CITY、EMAIL**  
    
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/setting.png)
     
@@ -127,19 +127,29 @@ AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApi
      ```shell
      应用程序密码 (第一步获得)
      ```
+     CITY
+     ```shell
+     城市 (例如Beijing,自动发送天气邮件要用到)
+     ```
+     EMAIL
+     ```shell
+     收件邮箱 (自动发送天气邮件要用到)
+     ```
+
+
 ________________________________________________
 
 #### 试运行 ####
    * 1）点击上栏中间的Action进入运行日志页面，中间应该有个绿色按钮（I understand my workflow...），点击。
    
-   自动刷新后，会看到左边有两个流程，一个Auto Api Pro，一个Update Token （这两个流程名字前面应该是有两个黄色感叹号的）。
-   分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**两个流程都要按这个！**
+   自动刷新后，会看到左边有三个个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
+   分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**三个流程都要按这个！**
    
    （不确定是否都需要进行这一步，我自己做视频教程的时候发现有的。如果你没有，直接忽略并往下进行，能正常运行就可以了 ）
    
-   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Auto Api Pro流程 -> build -> runapi 就能看到每次的运行日志，看看运行状况
+   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志，看看运行状况
 
-   （必需点进去build里面的run api看下，api有没有调用到位，有没有出错。外面的Auto Api打勾只能说明运行是正常的，我们还需要确认api调用成功了，就像图里的一样）
+   （必需点进去build里面的run api看下，api有没有调用到位，操作有没有成功，有没有出错。外面的流程打勾只能说明运行是正常的，我们还需要确认api调用成功了，就像图里的一样）
    
    
    ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApi/日志.png)
