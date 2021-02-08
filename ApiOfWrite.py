@@ -64,9 +64,9 @@ def apiDelete(a,url):
         print('    操作失败')
 
 #上传文件到onedrive(小于4M)
-def UploadFile(a,filesname,files):
+def UploadFile(a,filesname,f):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
-    data = files
+    data = f
     apiPost(a,data,url)
         
 # 发送邮件到自定义邮箱
@@ -74,7 +74,7 @@ def SendEmail(a,subject,content):
     url=r'https://graph.microsoft.com/v1.0/me/sendMail'
     mailmessage={'message': {'subject': subject,
                              'body': {'contentType': 'Text', 'content': content},
-                             'toRecipients': [{'emailAddress': {'address': email_address}}],
+                             'toRecipients': [{'emailAddress': {'address': emailaddress}}],
                              },
                  'saveToSentItems': 'true'}            
     apiPost(a,json.dumps(mailmessage),url)	
