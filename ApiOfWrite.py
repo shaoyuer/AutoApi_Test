@@ -141,7 +141,7 @@ def teamWrite(a,channelname):
     print("    删除team频道")
     apiReq('delete',a,url)
 
-#def onenoteWrite(a,notename):
+def onenoteWrite(a,notename):
     url=r'https://graph.microsoft.com/v1.0/me/onenote/notebooks'
     data={
          "displayName": notename
@@ -186,4 +186,4 @@ for a in range(1, int(app_num)+1):
     if config == 'Y' or choosenum == 1:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
-#    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
