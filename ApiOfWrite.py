@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 import os
 import requests as req
-import xlsxwriter
 import json,sys,time,random
 
 reload(sys)
@@ -59,15 +58,14 @@ def apiReq(method,a,url,data='QAQ'):
           
 
 #上传文件到onedrive(小于4M)
-def UploadFile(a,filesname,path):
+def UploadFile(a,filesname,f):
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
-    with open(path,'rb') as f:
-        apiReq('put',a,url,f)
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/content'
+    apiReq('put',a,url,f)
     
         
 # 发送邮件到自定义邮箱
@@ -144,28 +142,22 @@ weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 #实际运行   
 for a in range(1, int(app_num)+1):
     #生成随机名称
-    filesname=str(a)+'_QAQ'+str(random.randint(1,600))+r'.xlsx'
-    #新建随机xlsx文件
-    xls = xlsxwriter.Workbook(filesname)
-    xlssheet = xls.add_worksheet()
-    xlssheet.write(0,0,str(random.randint(1,600)))
-    xlssheet.write(0,1,str(random.randint(1,600)))
-    xlssheet.write(1,0,str(random.randint(1,600)))
-    xlssheet.write(1,1,str(random.randint(1,600)))
-    xls.close()
+    filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
+    os.rename('AutoApi.xlsx',filesname)
     xlspath=sys.path[0]+r'/'+filesname
-    print('可能会偶尔出现创建上传失败的情况\n'+'上传随机文件到onedrive')
-    UploadFile(a,filesname,xlspath)
+    print('可能会偶尔出现创建上传失败的情况\n'+'上传xlsx文件到onedrive')
+    with open(xlspath,'rb') as f:
+        UploadFile(a,filesname,f)
     print('发送邮件')
     if emailaddress != '':
         SendEmail(a,'weather',weather)
     choosenum = random.randint(1,3) 
-#    if config == 'Y' or choosenum == 1:
-#        print('excel文件操作')
-#        excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-    if config == 'Y' or choosenum == 2:
-        print('team操作')
-        teamWrite(a,'QVQ'+str(random.randint(1,600)))
+    if config == 'Y' or choosenum == 1:
+        print('excel文件操作')
+        excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
+#    if config == 'Y' or choosenum == 2:
+#        print('team操作')
+#        teamWrite(a,'QVQ'+str(random.randint(1,600)))
     if config == 'Y' or choosenum == 1:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
