@@ -50,13 +50,13 @@ def apiReq(method,a,url,data='QAQ'):
         posttext=req.delete(url,headers=headers)
     else :
         posttext=req.get(url,headers=headers)
-#    if posttext.status_code < 300:
-#        print('        操作成功')
-#    else:
-#        print('        操作失败')
-    if posttext.status_code > 300:
+    if posttext.status_code < 300:
+        print('        操作成功')
+    else:
         print('        操作失败')
-        #成功不提示
+#    if posttext.status_code > 300:
+ #       print('        操作失败')
+#        #成功不提示
     return posttext.text
           
 
@@ -84,7 +84,6 @@ def excelWrite(a,filesname,sheet):
          "name": sheet
          }
     print('    添加工作表')
-    print(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
