@@ -36,32 +36,27 @@ def getmstoken(ms_token,appnum):
     refresh_token = jsontxt['refresh_token']
     access_token = jsontxt['access_token']
     return access_token
-    
-#apiPost函数
-def apiPost(a,data,url):
+
+def apiReq(method,a,url,data='QAQ'):
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    posttext=req.post(url,headers=headers,data=data)
+    if method == 'post':
+        posttext=req.post(url,headers=headers,data=data)
+    elif method == 'put':
+        posttext=req.put(url,headers=headers,data=data)
+    elif method == 'delete':
+        posttext=req.delete(url,headers=headers)
+    else :
+        posttext=req.get(url,headers=headers)
     if posttext.status_code < 300:
         print('    操作成功')
     else:
         print('    操作失败')
-    return posttext
-    
-#apiDelete函数
-def apiDelete(a,url):
-    access_token=access_token_list[a-1]
-    headers={
-            'Authorization': 'bearer ' + access_token,
-            'Content-Type': 'application/json'
-            }
-    if req.delete(url,headers=headers).status_code < 300:
-        print('    操作成功')
-    else:
-        print('    操作失败')
+    return posttext.text
+          
 
 #上传文件到onedrive(小于4M)
 def UploadFile(a,filesname,path):
@@ -70,13 +65,10 @@ def UploadFile(a,filesname,path):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/'+filesname+r':/content'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
     with open(path,'rb') as f:
-        posttext=req.post(url,headers=headers,data=f)
-        if posttext.status_code < 300:
-           print('    操作成功')
-        else:
-           print('    操作失败')
+        apiReq('put',a,url,f)
+    
         
 # 发送邮件到自定义邮箱
 def SendEmail(a,subject,content):
@@ -86,7 +78,7 @@ def SendEmail(a,subject,content):
                              'toRecipients': [{'emailAddress': {'address': emailaddress}}],
                              },
                  'saveToSentItems': 'true'}            
-    apiPost(a,json.dumps(mailmessage),url)	
+    apiReq('post',a,url,json.dumps(mailmessage))	
 	
 #修改excel(这函数分离好像意义不大)
 #api-获取itemid: https://graph.microsoft.com/v1.0/me/drive/root/search(q='.xlsx')?select=name,id,webUrl
@@ -96,39 +88,33 @@ def excelWrite(a,filesname,sheet):
          'name': sheet
          }
     print('  添加工作表')
-    apiPost(a,data,url)
+    apiReq('post',a,url,data)
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
          "hasHeaders": 'false',
          }
     print('  添加表格')
-    apiPost(a,data,url)
+    apiReq('post',a,url,data)
     
 def taskWrite(a,taskname):
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'
     data={
          "displayName": taskname
          }
-    listjson=json.loads(apiPost(a,data,url))
+    listjson=json.loads(apiReq('post',a,url,data))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks'
     data={
          "title": taskname,
          }
-    taskjson=json.loads(apiPost(a,data,url))
+    taskjson=json.loads(apiReq('post',a,url,data))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks/'+taskjson['id']
-    apiDelete(a,url)
+    apiReq('delete',a,url)
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'+listjson['id']
-    apiDelete(a,url)    
+    apiReq('delete',a,url)    
     
 def teamWrite(a,channelname):
-    access_token=access_token_list[a-1]
-    headers={
-            'Authorization': 'bearer ' + access_token,
-            'Content-Type': 'application/json'
-            }
-    html=req.get('https://graph.microsoft.com/v1.0/me/joinedTeams',headers=headers)
-    jsontxt = json.loads(html.text)
+    jsontxt = json.loads(apiReq('get',a,url))
     objectlist=jsontxt['value']
     #创建
     print("  创建team频道")
@@ -138,10 +124,10 @@ def teamWrite(a,channelname):
          "membershipType": "standard"
          }
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels'
-    jsontxt = json.loads(apiPost(a,data,url))
+    jsontxt = json.loads(apiReq('post',a,url,data))
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels/'+jsontxt['id']
     print("  删除team频道")
-    apiDelete(a,url)    
+    apiReq('delete',a,url)      
     
 #一次性获取access_token，降低获取率
 for a in range(1, int(app_num)+1):
