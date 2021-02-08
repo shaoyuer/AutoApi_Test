@@ -93,14 +93,14 @@ def excelWrite(a,filesname,sheet):
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['name']+r'/rows/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
     data={
           "values": [
           [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
           [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)]
           ]
          }
-    apiReq('post',a,url,json.dumps(data))
+    print(apiReq('post',a,url,json.dumps(data)))
     
 def taskWrite(a,taskname):
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'
@@ -175,14 +175,16 @@ for a in range(1, int(app_num)+1):
     print('发送邮件')
     if emailaddress != '':
         SendEmail(a,'weather',weather)
-    choosenum = random.randint(1,3) 
+    choosenum = random.randint(1,4) 
     if config == 'Y' or choosenum == 1:
         print('excel文件操作')
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
     if config == 'Y' or choosenum == 2:
         print('team操作')
         teamWrite(a,'QVQ'+str(random.randint(1,600)))
-    if config == 'Y' or choosenum == 1:
+    if config == 'Y' or choosenum == 3:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
-    onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+    if config == 'Y' or choosenum == 4:
+        print('onenote操作')
+        onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
