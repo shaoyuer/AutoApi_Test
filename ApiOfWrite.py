@@ -173,7 +173,7 @@ for a in range(1, int(app_num)+1):
     elif config == 'Y' or choosenum == 2  :
         print('team频道操作')
         teamWrite(a,'QVQ'+str(random.randint(1,600))
-    elif config == 'Y' or choosenum == 3 :
+    else config == 'Y' or choosenum == 3 :
         print('tasks操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600))
     
