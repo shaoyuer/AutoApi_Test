@@ -84,6 +84,7 @@ def excelWrite(a,filesname,sheet):
          "name": sheet
          }
     print('    添加工作表')
+    apiReq('post',a,url,json.dumps(data))
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
