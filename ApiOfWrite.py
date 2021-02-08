@@ -83,7 +83,7 @@ def SendEmail(a,subject,content):
 def excelWrite(a,filesname,sheet):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/workbook/worksheets/add'
     data={
-         'name': sheet
+         "name": sheet
          }
     print('  添加工作表')
     apiReq('post',a,url,data)
