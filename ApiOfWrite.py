@@ -50,13 +50,13 @@ def apiReq(method,a,url,data='QAQ'):
         posttext=req.delete(url,headers=headers)
     else :
         posttext=req.get(url,headers=headers)
-#    if posttext.status_code < 300:
-#        print('        操作成功')
- #   else:
- #       print('        操作失败')
-    if posttext.status_code > 300:
+    if posttext.status_code < 300:
+        print('        操作成功')
+    else:
         print('        操作失败')
-        #成功不提示
+#    if posttext.status_code > 300:
+#        print('        操作失败')
+#        #成功不提示
     return posttext.text
           
 
@@ -169,7 +169,7 @@ for a in range(1, int(app_num)+1):
     filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
     os.rename('AutoApi.xlsx',filesname)
     xlspath=sys.path[0]+r'/'+filesname
-    print('可能会偶尔出现创建上传失败的情况\n'+'上传xlsx文件到onedrive')
+    print('可能会偶尔出现创建上传失败的情况'+'\n'+'上传文件')
     with open(xlspath,'rb') as f:
         UploadFile(a,filesname,f)
     print('发送邮件')
