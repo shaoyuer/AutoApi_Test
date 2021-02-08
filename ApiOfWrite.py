@@ -92,15 +92,16 @@ def excelWrite(a,filesname,sheet):
          }
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
-    data={
-          "values": [
-          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
-          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)]
-          ]
-         }
-    print(apiReq('post',a,url,json.dumps(data)))
+#   添加行失败，搞不懂。
+#    print('    添加行')
+#    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
+#    data={
+#          "values": [
+#          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
+#          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)]
+#          ]
+#         }
+#    print(apiReq('post',a,url,json.dumps(data)))
     
 def taskWrite(a,taskname):
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'
