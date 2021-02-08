@@ -157,7 +157,7 @@ weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 #实际运行   
 for a in range(1, int(app_num)+1):
     #生成随机名称
-    filesname=sta(a)+'_QAQ'+str(random.randint(1,600))+r'.xlsx'
+    filesname=str(a)+'_QAQ'+str(random.randint(1,600))+r'.xlsx'
     #新建随机xlsx文件
     xls = xlsxwriter.Workbook(filesname)
     xlssheet = xls.add_worksheet()
