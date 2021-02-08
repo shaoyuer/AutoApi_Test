@@ -91,7 +91,7 @@ def excelWrite(a,filesname,sheet):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
-         "hasHeaders": false
+         "hasHeaders": 'false',
          }
     print('  添加表格')
     apiPost(a,data,url)
