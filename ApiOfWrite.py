@@ -86,27 +86,27 @@ def excelWrite(a,filesname,sheet):
          "name": sheet
          }
     print('  添加工作表')
-    apiReq('post',a,url,data)
+    apiReq('post',a,url,json.dumps(data))
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
          "hasHeaders": 'false',
          }
     print('  添加表格')
-    apiReq('post',a,url,data)
+    apiReq('post',a,url,json.dumps(data))
     
 def taskWrite(a,taskname):
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'
     data={
          "displayName": taskname
          }
-    listjson=json.loads(apiReq('post',a,url,data))
+    listjson=json.loads(apiReq('post',a,url,json.dumps(data)))
     print(str(listjson))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks'
     data={
          "title": taskname,
          }
-    taskjson=json.loads(apiReq('post',a,url,data))
+    taskjson=json.loads(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks/'+taskjson['id']
     apiReq('delete',a,url)
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'+listjson['id']
@@ -124,7 +124,7 @@ def teamWrite(a,channelname):
          "membershipType": "standard"
          }
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels'
-    jsontxt = json.loads(apiReq('post',a,url,data))
+    jsontxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     url=r'https://graph.microsoft.com/v1.0/teams/'+objectlist[0]['id']+r'/channels/'+jsontxt['id']
     print("  删除team频道")
     apiReq('delete',a,url)      
@@ -155,6 +155,7 @@ for a in range(1, int(app_num)+1):
     choosenum = random.randint(1,3) 
     if config == 'Y' or choosenum == 1:
         print('excel文件操作')
+        time.sleep(120)
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
 #    if config == 'Y' or choosenum == 2:
 #        print('team操作')
