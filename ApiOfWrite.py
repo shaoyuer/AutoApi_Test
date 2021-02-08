@@ -158,4 +158,3 @@ for a in range(1, int(app_num)+1):
     excelWrite(a,filesname,'QVQ'+str(random.randint(1,600))
     teamWrite(a,'QVQ'+str(random.randint(1,600))
     taskWrite(a,'QVQ'+str(random.randint(1,600))
-    
