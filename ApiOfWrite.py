@@ -70,7 +70,7 @@ def UploadFile(a,filesname,path):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/content'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/'+filesname+r':/content'
     with open(path,'rb') as f:
         posttext=req.post(url,headers=headers,data=f)
         if posttext.status_code < 300:
@@ -157,7 +157,7 @@ weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 #实际运行   
 for a in range(1, int(app_num)+1):
     #生成随机名称
-    filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
+    filesname=sta(a)+'_QAQ'+str(random.randint(1,600))+r'.xlsx'
     #新建随机xlsx文件
     xls = xlsxwriter.Workbook(filesname)
     xlssheet = xls.add_worksheet()
