@@ -90,7 +90,7 @@ def excelWrite(a,filesname,sheet):
          "hasHeaders": False
          }
     print('    添加表格')
-    jsontxt=json.load(apiReq('post',a,url,json.dumps(data)))
+    jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    添加行')
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables/'+jsontxt['id']+r'/rows/add'
     data={
