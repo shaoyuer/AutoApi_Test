@@ -50,13 +50,13 @@ def apiReq(method,a,url,data='QAQ'):
         posttext=req.delete(url,headers=headers)
     else :
         posttext=req.get(url,headers=headers)
-    if posttext.status_code < 300:
-        print('        操作成功')
-    else:
-        print('        操作失败')
-#    if posttext.status_code > 300:
+#    if posttext.status_code < 300:
+#        print('        操作成功')
+ #   else:
  #       print('        操作失败')
-#        #成功不提示
+    if posttext.status_code > 300:
+        print('        操作失败')
+        #成功不提示
     return posttext.text
           
 
@@ -149,7 +149,6 @@ def onenoteWrite(a,notename):
     print('    创建笔记本')
     notetxt = json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    删除笔记本')
-    print(notetxt['id'])
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/Notebooks/'+notename
     apiReq('delete',a,url)
     
