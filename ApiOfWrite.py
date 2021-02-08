@@ -81,13 +81,13 @@ def SendEmail(a,subject,content):
 #修改excel(这函数分离好像意义不大)
 #api-获取itemid: https://graph.microsoft.com/v1.0/me/drive/root/search(q='.xlsx')?select=name,id,webUrl
 def excelWrite(a,filesname,sheet):
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/workbook/worksheets/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/add'
     data={
          "name": sheet
          }
     print('  添加工作表')
     apiReq('post',a,url,data)
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/app'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/'+sheet+r'/tables/add'
     data={
          "address": "A1:D8",
          "hasHeaders": 'false',
@@ -101,6 +101,7 @@ def taskWrite(a,taskname):
          "displayName": taskname
          }
     listjson=json.loads(apiReq('post',a,url,data))
+    print(str(listjson))
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks'
     data={
          "title": taskname,
