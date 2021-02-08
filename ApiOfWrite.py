@@ -151,7 +151,7 @@ for a in range(1, int(app_num)+1):
     filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
     #新建随机xlsx文件
     xls = xlsxwriter.Workbook(filesname)
-    xlssheet = workbook.add_worksheet()
+    xlssheet = xls.add_worksheet()
     xlssheet.write(0,0,str(random.randint(1,600)))
     xlssheet.write(0,1,str(random.randint(1,600)))
     xlssheet.write(1,0,str(random.randint(1,600)))
