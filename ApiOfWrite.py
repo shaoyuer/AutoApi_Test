@@ -159,7 +159,6 @@ for a in range(1, int(app_num)+1):
     choosenum = random.randint(1,3) 
     if config == 'Y' or choosenum == 1:
         print('excel文件操作')
-        time.sleep(120)
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
     if config == 'Y' or choosenum == 2:
         print('team操作')
