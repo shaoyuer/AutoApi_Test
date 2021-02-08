@@ -8,6 +8,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
+#是否全齐（3选1）
+config = 'Y'
 if app_num == '':
     app_num = '1'
 city=os.getenv('CITY')
@@ -165,13 +167,13 @@ for a in range(1, int(app_num)+1):
         SendEmail(a,'weather',weather)
     #excel,team,task3选1执行
     choosenum = random.randint(1,3) 
-#    if choosenum == 1 :
+    if config == 'Y' or choosenum == 1 :
         print('excel文件操作')
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600))
-#    elif choosenum == 2 :
+    elif config == 'Y' or choosenum == 2  :
         print('team频道操作')
         teamWrite(a,'QVQ'+str(random.randint(1,600))
-#    elif choosenum == 3 :
+    elif config == 'Y' or choosenum == 3 :
         print('tasks操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600))
     
