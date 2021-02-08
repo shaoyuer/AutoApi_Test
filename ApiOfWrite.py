@@ -105,7 +105,7 @@ def taskWrite(a,taskname):
     apiDelete(a,url)
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'+listjson['id']
     apiDelete(a,url)    
-def teamWrite(a,channelname):
+def teamsWrite(a,channelname):
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
@@ -156,5 +156,5 @@ for a in range(1, int(app_num)+1):
         SendEmail(a,'weather',weather)
     choosenum = random.randint(1,3) 
     excelWrite(a,filesname,'QVQ'+str(random.randint(1,600))
-    teamWrite(a,'QVQ'+str(random.randint(1,600))
+    teamsWrite(a,'QVQ'+str(random.randint(1,600))
     taskWrite(a,'QVQ'+str(random.randint(1,600))
