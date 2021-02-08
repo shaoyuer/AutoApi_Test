@@ -6,7 +6,12 @@ import json,sys,time,random
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+<<<<<<< HEAD
 emailaddress=os.getenv('EMAIL')
+=======
+path=sys.path[0]+r'/AutoApi.xlsx'
+email_address=os.getenv('EMAIL')
+>>>>>>> 1136cea6c987a690104f5001bdff62a760e36800
 app_num=os.getenv('APP_NUM')
 if app_num == '':
     app_num = '1'
@@ -42,6 +47,7 @@ def apiPost(a,data,url):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
+<<<<<<< HEAD
     posttext=req.post(url,headers=headers,data=data)
     if posttext.status_code < 300:
         print('    操作成功')
@@ -51,6 +57,15 @@ def apiPost(a,data,url):
 
 #apiDelete函数
 def apiDelete(a,url):
+=======
+    if req.put(r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/'+filesname+r':/content',headers=headers,data=f).status_code < 300:
+        print('文件上传onedrive成功\n')
+    else:
+        print('文件上传onedrive失败\n')
+        
+# 发送天气邮件到自定义邮箱
+def SendEmail(a,content,email_address):
+>>>>>>> 1136cea6c987a690104f5001bdff62a760e36800
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
@@ -72,7 +87,7 @@ def SendEmail(a,subject,content):
     url=r'https://graph.microsoft.com/v1.0/me/sendMail'
     mailmessage={'message': {'subject': subject,
                              'body': {'contentType': 'Text', 'content': content},
-                             'toRecipients': [{'emailAddress': {'address': emailaddress}}],
+                             'toRecipients': [{'emailAddress': {'address': email_address}}],
                              },
                  'saveToSentItems': 'true'}            
     apiPost(a,json.dumps(mailmessage),url)
@@ -140,12 +155,17 @@ for a in range(1, int(app_num)+1):
     ms_token=os.getenv('MS_TOKEN_'+str(a))
     access_token_list[a-1]=getmstoken(ms_token,a)
 
+<<<<<<< HEAD
 #获取天气充当邮件内容
+=======
+#获取天气(待优化)
+>>>>>>> 1136cea6c987a690104f5001bdff62a760e36800
 headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 
 #实际运行   
 for a in range(1, int(app_num)+1):
+<<<<<<< HEAD
     #生成随机名称
     filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
     #新建随机xlsx文件
@@ -174,4 +194,14 @@ for a in range(1, int(app_num)+1):
 #    elif choosenum == 3 :
         print('tasks操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600))
+=======
+    print('上传xlsx文件')
+    #上传excel文件是为了能运行excel的api
+    with open(path, 'rb') as f:
+        UploadFile(a,'AutoApi.xlsx',f)
+    print('上传随机txt文件')
+    UploadFile(a,'log.txt',weather)
+    if email_address != '':
+        SendEmail(a,weather,email_address)
+>>>>>>> 1136cea6c987a690104f5001bdff62a760e36800
     
