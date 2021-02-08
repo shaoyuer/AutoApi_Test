@@ -155,10 +155,7 @@ for a in range(1, int(app_num)+1):
     if emailaddress != '':
         SendEmail(a,'weather',weather)
     choosenum = random.randint(1,3) 
-    print('excel文件操作')
     excelWrite(a,filesname,'QVQ'+str(random.randint(1,600))
-    print('team操作')
     teamWrite(a,'QVQ'+str(random.randint(1,600))
-    print('task操作')
     taskWrite(a,'QVQ'+str(random.randint(1,600))
     
