@@ -99,7 +99,7 @@ def excelWrite(a,filesname,sheet):
     print(jsontxt['value'][0]['name'])
 #   添加行失败，搞不懂。
     print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['value'][0]['id']+r'/rows/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['value'][0]['name']+r'/rows/add'
     data={
           "values": [
           [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
