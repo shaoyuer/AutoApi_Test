@@ -101,7 +101,7 @@ def excelWrite(a,filesname,sheet):
     data={
          "values": rowsvalues
          }
-    print(apiReq('post',a,url,json.dumps(data)))
+    apiReq('post',a,url,json.dumps(data))
     
 def taskWrite(a,taskname):
     url=r'https://graph.microsoft.com/v1.0/me/todo/lists'
