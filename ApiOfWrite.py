@@ -18,7 +18,7 @@ app_num=os.getenv('APP_NUM')
 # app_delay: 是否开启账号之间的延时，默认0关闭
 ########################################
 config = {
-         'allstart': 0,
+         'allstart': 1,
          'rounds': 1,
          'rounds_delay': [0,0,5],
          'api_delay': [0,0,5],
@@ -179,7 +179,7 @@ for a in range(1, int(app_num)+1):
     client_secret=os.getenv('CLIENT_SECRET_'+str(a))
     ms_token=os.getenv('MS_TOKEN_'+str(a))
     access_token_list[a-1]=getmstoken(ms_token,a)
-    
+print('')    
 #获取天气
 headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
@@ -190,7 +190,7 @@ for a in range(1, int(app_num)+1):
     print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )')
     if emailaddress != '':
         SendEmail(a,'weather',weather)
-        print('\n')
+        print('')
 #其他api
 for _ in range(1,config['rounds']+1):
     if config['rounds_delay'][0] == 1:
