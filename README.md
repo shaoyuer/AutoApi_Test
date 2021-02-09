@@ -7,8 +7,6 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
 
 ### 相关 ###
 * AutoApi: https://github.com/wangziyingwen/AutoApi
-* ~~AutoApiP：https://github.com/wangziyingwen/AutoApiP~~
-* ~~AutoApiSecret：https://github.com/wangziyingwen/AutoApiSecret~~
 * **错误及解决办法/续期相关知识/更新日志**：https://github.com/wangziyingwen/Autoapi-test
    * 大部分错误说明已更新进程序，详细请运行后看action日志报告
 * 视频教程：
@@ -172,6 +170,14 @@ ________________________________________________
         同时，依次点击页面上栏右边的 Setting -> 左栏 Secrets（也就是Github方面准备的第三步的secret页面），应该能看到MS_TOKEN显示刚刚update了
         
         （这一步是为了保证重新上传到secret的token是正确的）
+        
+   * 4) 运行成功后，建议修改：（改不改都行）
+         
+        ApiOfWrite.py 文件第21行 ：
+        
+              'allstart': 1, (把 1 改成 0 )
+           
+              
         
 #### 教程最后 ####
 
