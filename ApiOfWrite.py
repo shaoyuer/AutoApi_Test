@@ -184,12 +184,12 @@ for a in range(1, int(app_num)+1):
     if config['allstart'] == 'Y' or choosenum == 1:
         print('excel文件操作')
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-    if config['allstart'] == 'Y' or choosenum == 2:
+#    if config['allstart'] == 'Y' or choosenum == 2:
 #        print('team操作')
 #        teamWrite(a,'QVQ'+str(random.randint(1,600)))
-    if config['allstart'] == 'Y' or choosenum == 3:
+#    if config['allstart'] == 'Y' or choosenum == 3:
 #        print('task操作')
 #        taskWrite(a,'QVQ'+str(random.randint(1,600)))
-    if config['allstart'] == 'Y' or choosenum == 4:
+#    if config['allstart'] == 'Y' or choosenum == 4:
 #        print('onenote操作')
 #        onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
