@@ -4,12 +4,26 @@ import xlsxwriter
 import requests as req
 import json,sys,time,random
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
-#是否全启（3选1）
-config = {'allstart':'Y','延时':'Y'}
+###########################
+# config选项说明
+# 0：关闭  ， 1：开启
+# allstart：是否全api开启调用，关闭默认随机抽取调用。默认0关闭
+# rounds: 轮数，即每次启动跑几轮。
+# rounds_delay: 是否开启每轮之间的随机延时，后面两参数代表延时的区间。默认0关闭
+# api_delay: 是否开启api之间的延时，默认0关闭
+# app_delay: 是否开启账号之间的延时，默认0关闭
+########################################
+config = {
+         'allstart': 0,
+         'rounds': 1,
+         'rounds_delay': [0,0,5],
+         'api_delay': [0,0,5]，
+         'app_delay': [0,0,5]
+         }        
 if app_num == '':
     app_num = '1'
 city=os.getenv('CITY')
@@ -37,7 +51,13 @@ def getmstoken(ms_token,appnum):
     access_token = jsontxt['access_token']
     return access_token
 
+#api延时
+def apiDelay():
+    if config['api_delay'][0] == 1:
+        time.sleep(random.randint(config['api_delay'][1],config['api_delay'][2]))
+        
 def apiReq(method,a,url,data='QAQ'):
+    apiDelay()
     access_token=access_token_list[a-1]
     headers={
             'Authorization': 'bearer ' + access_token,
@@ -95,7 +115,7 @@ def excelWrite(a,filesname,sheet):
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    添加行')
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
-    rowsvalues=[[0]*4]*2
+    sheetsvalues=[[0]*4]*2
     for v1 in range(0,2):
         for v2 in range(0,4):
             rowsvalues[v1][v2]=random.randint(1,1200)
@@ -164,36 +184,45 @@ for a in range(1, int(app_num)+1):
 headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 
-#实际运行   
+#实际运行
 for a in range(1, int(app_num)+1):
-    #生成随机名称
-    filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
-#    os.rename('AutoApi.xlsx',filesname)
-    #新建随机xlsx文件
-    xls = xlsxwriter.Workbook(filesname)
-    xlssheet = xls.add_worksheet()
-    xlssheet.write(0,0,str(random.randint(1,600)))
-    xlssheet.write(0,1,str(random.randint(1,600)))
-    xlssheet.write(1,0,str(random.randint(1,600)))
-    xlssheet.write(1,1,str(random.randint(1,600)))
-    xls.close()
-    xlspath=sys.path[0]+r'/'+filesname
-    print('可能会偶尔出现创建上传失败的情况'+'\n'+'上传文件')
-    with open(xlspath,'rb') as f:
-        UploadFile(a,filesname,f)
-#    print('发送邮件')
-#    if emailaddress != '':
-#        SendEmail(a,'weather',weather)
-    choosenum = random.randint(1,4) 
-    if config['allstart'] == 'Y' or choosenum == 1:
-        print('excel文件操作')
-        excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-#    if config['allstart'] == 'Y' or choosenum == 2:
-#        print('team操作')
-#        teamWrite(a,'QVQ'+str(random.randint(1,600)))
-#    if config['allstart'] == 'Y' or choosenum == 3:
-#        print('task操作')
-#        taskWrite(a,'QVQ'+str(random.randint(1,600)))
-#    if config['allstart'] == 'Y' or choosenum == 4:
-#        print('onenote操作')
-#        onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+    print('账号 '+str(a))
+    print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )\n')
+    if emailaddress != '':
+        SendEmail(a,'weather',weather)
+#其他api
+for _ in range(1,config['rounds']+1):
+    if config['rounds_delay'][0] == 1:
+        time.sleep(random.randint(config['rounds_delay'][1],config['rounds_delay'][2]))     
+    print('第 '+str(_)+' 轮\n')        
+    for a in range(1, int(app_num)+1):
+        if config['app_delay'][0] == 1:
+            time.sleep(random.randint(config['app_delay'][1],config['app_delay'][2]))        
+        print('账号 '+str(a))    
+        #生成随机名称
+        filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
+        #新建随机xlsx文件
+        xls = xlsxwriter.Workbook(filesname)
+        xlssheet = xls.add_worksheet()
+        for s1 in range(0,4):
+            for s2 in range(0,4):
+                xlssheet.write(s1,s2,str(random.randint(1,600)))
+        xls.close()
+        xlspath=sys.path[0]+r'/'+filesname
+        print('上传文件 ( 可能会偶尔出现创建上传失败的情况 ) ')
+        with open(xlspath,'rb') as f:
+            UploadFile(a,filesname,f)
+        choosenum = random.randint(1,4) 
+        if config['allstart'] == 1 or choosenum == 1:
+            print('excel文件操作')
+            excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
+        if config['allstart'] == 1 or choosenum == 2:
+            print('team操作')
+            teamWrite(a,'QVQ'+str(random.randint(1,600)))
+        if config['allstart'] == 1 or choosenum == 3:
+            print('task操作')
+            taskWrite(a,'QVQ'+str(random.randint(1,600)))
+        if config['allstart'] == 1 or choosenum == 4:
+            print('onenote操作')
+            onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+        print('-')
