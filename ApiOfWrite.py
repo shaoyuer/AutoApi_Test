@@ -115,7 +115,7 @@ def excelWrite(a,filesname,sheet):
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
     print('    添加行')
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
-    sheetsvalues=[[0]*4]*2
+    rowsvalues=[[0]*4]*2
     for v1 in range(0,2):
         for v2 in range(0,4):
             rowsvalues[v1][v2]=random.randint(1,1200)
