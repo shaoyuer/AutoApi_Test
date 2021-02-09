@@ -8,7 +8,7 @@ sys.setdefaultencoding('utf-8')
 emailaddress=os.getenv('EMAIL')
 app_num=os.getenv('APP_NUM')
 #是否全启（3选1）
-config = 'Y'
+config = {'allstart':'Y','延时':'Y'}
 if app_num == '':
     app_num = '1'
 city=os.getenv('CITY')
@@ -92,6 +92,10 @@ def excelWrite(a,filesname,sheet):
          }
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
+    print('    获取表格')
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'tables'
+    jsontxt=json.loads(apiReq('get',a,url))
+    print(jsontxt['value'][0]['id'])
 #   添加行失败，搞不懂。
 #    print('    添加行')
 #    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
@@ -176,15 +180,15 @@ for a in range(1, int(app_num)+1):
     if emailaddress != '':
         SendEmail(a,'weather',weather)
     choosenum = random.randint(1,4) 
-    if config == 'Y' or choosenum == 1:
+    if config['allstart'] == 'Y' or choosenum == 1:
         print('excel文件操作')
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-    if config == 'Y' or choosenum == 2:
+    if config['allstart'] == 'Y' or choosenum == 2:
         print('team操作')
         teamWrite(a,'QVQ'+str(random.randint(1,600)))
-    if config == 'Y' or choosenum == 3:
+    if config['allstart'] == 'Y' or choosenum == 3:
         print('task操作')
         taskWrite(a,'QVQ'+str(random.randint(1,600)))
-    if config == 'Y' or choosenum == 4:
+    if config['allstart'] == 'Y' or choosenum == 4:
         print('onenote操作')
         onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
