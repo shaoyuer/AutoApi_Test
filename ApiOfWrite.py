@@ -96,6 +96,7 @@ def excelWrite(a,filesname,sheet):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables'
     jsontxt=json.loads(apiReq('get',a,url))
     print(jsontxt['value'][0]['id'])
+    print(jsontxt['value'][0]['name'])
 #   添加行失败，搞不懂。
 #    print('    添加行')
 #    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
