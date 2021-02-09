@@ -141,24 +141,25 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
 ________________________________________________
 
 #### 试运行 ####
-   * 1）点击上栏中间的Action进入运行日志页面，中间应该有个绿色按钮（I understand my workflow...），点击。
-   
-   自动刷新后，会看到左边有三个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
-   分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**三个流程都要按这个！**
-   
-   （不确定是否都需要进行这一步，我自己做视频教程的时候发现有的。如果你没有，直接忽略并往下进行，能正常运行就可以了 ）
-   
-   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志
-
-   （必需点进去build里面的run api.XXX看下，api有没有调用到位，操作有没有成功，有没有出错。外面的流程打勾只能说明运行是正常的，我们还需要确认调用成功了，就像图里的一样）
-        
-   工作流程说明：
+   **工作流程说明**： 
    
              Run api.Write：创建系api，一天自动运行一次
              Run api.Read:  查询系api，每6小时自动运行一次
              Update Token： 微软密钥更新，每2天运行一次
+
+   * 1）点击上栏中间的Action进入运行日志页面，中间应该有个绿色按钮（I understand my workflow...），点击。
    
-   ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApi/日志.png)
+       自动刷新后，会看到左边有三个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
+   
+       分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**三个流程都要按这个！**
+   
+       （不确定是否都需要进行这一步，我自己做视频教程的时候发现有的。如果你没有，直接忽略并往下进行，能正常运行就可以了 ）
+   
+   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志
+
+       （必需点进去build里面的run api.XXX看下，api有没有调用到位，操作有没有成功，有没有出错）
+
+        ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApi/日志.png)
      
    * 3）再点两次星星，查看是否能再次成功运行
    
