@@ -177,19 +177,19 @@ for a in range(1, int(app_num)+1):
     print('可能会偶尔出现创建上传失败的情况'+'\n'+'上传文件')
     with open(xlspath,'rb') as f:
         UploadFile(a,filesname,f)
-    print('发送邮件')
-    if emailaddress != '':
-        SendEmail(a,'weather',weather)
+#    print('发送邮件')
+#    if emailaddress != '':
+#        SendEmail(a,'weather',weather)
     choosenum = random.randint(1,4) 
     if config['allstart'] == 'Y' or choosenum == 1:
         print('excel文件操作')
         excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
     if config['allstart'] == 'Y' or choosenum == 2:
-        print('team操作')
-        teamWrite(a,'QVQ'+str(random.randint(1,600)))
+#        print('team操作')
+#        teamWrite(a,'QVQ'+str(random.randint(1,600)))
     if config['allstart'] == 'Y' or choosenum == 3:
-        print('task操作')
-        taskWrite(a,'QVQ'+str(random.randint(1,600)))
+#        print('task操作')
+#        taskWrite(a,'QVQ'+str(random.randint(1,600)))
     if config['allstart'] == 'Y' or choosenum == 4:
-        print('onenote操作')
-        onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
+#        print('onenote操作')
+#        onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
