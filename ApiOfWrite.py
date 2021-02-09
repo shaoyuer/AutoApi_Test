@@ -92,19 +92,13 @@ def excelWrite(a,filesname,sheet):
          }
     print('    添加表格')
     jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
-    print('    获取表格')
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables'
-    jsontxt=json.loads(apiReq('get',a,url))
-    print(jsontxt['value'][0]['id'])
-    print(jsontxt['value'][0]['name'])
+    print(jsontxt)
 #   添加行失败，搞不懂。
     print('    添加行')
-    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/表1/rows/add'
+    url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/worksheets/'+sheet+r'/tables/'+jsontxt['id']+r'/rows/add'
     data={
-          "values": [
-          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)],
-          [random.randint(1,1200) , random.randint(1,1200), random.randint(1,1200)]
-          ]
+         "values": [[1,2,4,6],[3,4,6,7]]
          }
     print(apiReq('post',a,url,json.dumps(data)))
     
