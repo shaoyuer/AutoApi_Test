@@ -1,15 +1,16 @@
-# AutoApiP 2.0 ———— E5自动续期
-AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApiP
+# AutoApi v6.0 ———— E5自动续期
+AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~~、~~AutoApiS(v4.0)~~、~~AutoApiP(v5.0)~~、AutoApi(v6.0)
 
 ## 说明 ##
 * E5自动续期程序，但是**不保证续期**
 * 设置了**周六日(UTC时间)不启动**自动调用，周1-5每6小时自动启动一次 （修改看教程）
 
 ### 相关 ###
-* AutoApiP：https://github.com/wangziyingwen/AutoApiP
-* AutoApiSecret：https://github.com/wangziyingwen/AutoApiSecret
+* AutoApi: https://github.com/wangziyingwen/AutoApi
+* ~~AutoApiP：https://github.com/wangziyingwen/AutoApiP~~
+* ~~AutoApiSecret：https://github.com/wangziyingwen/AutoApiSecret~~
 * **错误及解决办法/续期相关知识/更新日志**：https://github.com/wangziyingwen/Autoapi-test
-   * P版错误说明已更新进程序，详细请运行后看action日志报告
+   * 大部分错误说明已更新进程序，详细请运行后看action日志报告
 * 视频教程：
    * B站：https://www.bilibili.com/video/BV185411n7Mq/
 
@@ -47,7 +48,7 @@ AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApi
     * 4）点击左边管理的**API权限**，点击+**添加权限**，点击常用Microsoft API里的**Microsoft Graph**(就是那个蓝色水晶)，
     点击**委托的权限**，然后在下面的条例选中下列需要的权限，最后点击底部**添加权限**
     
-    **赋予api权限的时候，选择以下几个**
+    **赋予api权限的时候，选择以下12个**
   
                 Calendars.ReadWrite、Contacts.ReadWrite、Directory.ReadWrite.All、
                 
@@ -142,15 +143,20 @@ ________________________________________________
 #### 试运行 ####
    * 1）点击上栏中间的Action进入运行日志页面，中间应该有个绿色按钮（I understand my workflow...），点击。
    
-   自动刷新后，会看到左边有三个个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
+   自动刷新后，会看到左边有三个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
    分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**三个流程都要按这个！**
    
    （不确定是否都需要进行这一步，我自己做视频教程的时候发现有的。如果你没有，直接忽略并往下进行，能正常运行就可以了 ）
    
-   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志，看看运行状况
+   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志
 
-   （必需点进去build里面的run api看下，api有没有调用到位，操作有没有成功，有没有出错。外面的流程打勾只能说明运行是正常的，我们还需要确认api调用成功了，就像图里的一样）
+   （必需点进去build里面的run api.XXX看下，api有没有调用到位，操作有没有成功，有没有出错。外面的流程打勾只能说明运行是正常的，我们还需要确认调用成功了，就像图里的一样）
+        
+   工作流程说明：
    
+             Run api.Write：创建系api，一天自动运行一次
+             Run api.Read:  查询系api，每6小时自动运行一次
+             Update Token： 微软密钥更新，每2天运行一次
    
    ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApi/日志.png)
      
@@ -223,29 +229,10 @@ __________________________________________________________________________
   
 #### 超级参数设置 ####
  
-   runapi.py 文件第11行有个config_list，里面是以下参数配置
-     
-   · 轮数：
-              
-             就是一次运行要跑多少轮api，也就是启动一次会重复跑几圈
-    
-   · 是否启动随机时间（默认关闭）：
-            
-            这个是每一轮结束，要不要等一个随机时间再开始调用下一轮。后面两个参数就是生成随机时间的，例如设置600，1200，就会延时600-1200s之间。
-    
-   · 是否开启随机api顺序（默认开启）：
-            
-            不开启就是初版10个api，固定顺序。开启就是28个api抽12个随机排序。
-    
-   · 是否开启各api延时（默认关闭）：
-            
-            这个是每个api之间要不要开启延时。后面两参数参考“随机时间”
-    
-   · 是否开启各账号延时（默认关闭）：
+   ApiOfRead.py ， ApiOfWrite.py 文件第11左右行各有个config，具体参数设置已在文件里说明
    
-            这个是每个账号/应用之间要不要开启延时。后面两参数参考“随机时间”
-    
-   （延时的设置是会延长运行时间的，全关闭大概每次运行1min，开启就会适当延长）
+   包括账号api的随机延时，api随机排序，每次轮数等参数
+     
    
 ### 结尾 ###
 
