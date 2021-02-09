@@ -141,21 +141,25 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
 ________________________________________________
 
 #### 试运行 ####
-   **工作流程说明**： 
-   
-             Run api.Write：创建系api，一天自动运行一次
-             Run api.Read:  查询系api，每6小时自动运行一次
-             Update Token： 微软密钥更新，每2天运行一次
 
    * 1）点击上栏中间的Action进入运行日志页面，中间应该有个绿色按钮（I understand my workflow...），点击。
    
-       自动刷新后，会看到左边有三个流程，一个Run api.Read，一个Run api.Write，一个Update Token （这三个流程名字前面应该是都有黄色感叹号的）。
+       自动刷新后，会看到左边有三个流程，一个Run api.Read，一个Run api.Write，一个Update Token。
+       
+         工作流程说明
+             Run api.Write：创建系api，一天自动运行一次
+             Run api.Read:  查询系api，每6小时自动运行一次
+             Update Token： 微软密钥更新，每2天运行一次
+             
+       这三个流程名字前面应该是都有黄色感叹号的
    
        分别点进去，然后会看到有个黄条（this schedule was disabled......），点击 enable workflow 按钮，**三个流程都要按这个！**
    
        （不确定是否都需要进行这一步，我自己做视频教程的时候发现有的。如果你没有，直接忽略并往下进行，能正常运行就可以了 ）
    
-   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志
+   * 2）点击两次右上角的星星（star，就是fork按钮的隔壁）启动action，
+   
+        再点击上面的Action选择Run api.Read或者api.Write流程 -> build -> run api 就能看到每次的运行日志
 
        （必需点进去build里面的run api.XXX看下，api有没有调用到位，操作有没有成功，有没有出错）
 
@@ -164,6 +168,7 @@ ________________________________________________
    * 3）再点两次星星，查看是否能再次成功运行
    
         然后点击Action里的 update token 流程 -> build -> update token ，日志里显示“微软密钥上传成功”。
+       
         同时，依次点击页面上栏右边的 Setting -> 左栏 Secrets（也就是Github方面准备的第三步的secret页面），应该能看到MS_TOKEN显示刚刚update了
         
         （这一步是为了保证重新上传到secret的token是正确的）
