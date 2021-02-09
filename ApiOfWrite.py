@@ -21,8 +21,8 @@ config = {
          'allstart': 0,
          'rounds': 1,
          'rounds_delay': [0,0,5],
-         'api_delay': [0,0,5]，
-         'app_delay': [0,0,5]
+         'api_delay': [0,0,5],
+         'app_delay': [0,0,5],
          }        
 if app_num == '':
     app_num = '1'
