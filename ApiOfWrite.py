@@ -166,8 +166,9 @@ weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 #实际运行   
 for a in range(1, int(app_num)+1):
     #生成随机名称
-    filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
-    os.rename('AutoApi.xlsx',filesname)
+#    filesname='QAQ'+str(random.randint(1,600))+r'.xlsx'
+#    os.rename('AutoApi.xlsx',filesname)
+    filesname=r'AutoApi.xlsx'
     xlspath=sys.path[0]+r'/'+filesname
     print('可能会偶尔出现创建上传失败的情况'+'\n'+'上传文件')
     with open(xlspath,'rb') as f:
@@ -175,10 +176,10 @@ for a in range(1, int(app_num)+1):
 #    print('发送邮件')
 #    if emailaddress != '':
 #        SendEmail(a,'weather',weather)
-    choosenum = random.randint(1,4) 
-    if config['allstart'] == 'Y' or choosenum == 1:
-        print('excel文件操作')
-        excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
+#    choosenum = random.randint(1,4) 
+#    if config['allstart'] == 'Y' or choosenum == 1:
+#        print('excel文件操作')
+#        excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
 #    if config['allstart'] == 'Y' or choosenum == 2:
 #        print('team操作')
 #        teamWrite(a,'QVQ'+str(random.randint(1,600)))
