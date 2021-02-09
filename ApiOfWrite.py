@@ -187,9 +187,10 @@ weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 #实际运行
 for a in range(1, int(app_num)+1):
     print('账号 '+str(a))
-    print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )\n')
+    print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )')
     if emailaddress != '':
         SendEmail(a,'weather',weather)
+        print('\n')
 #其他api
 for _ in range(1,config['rounds']+1):
     if config['rounds_delay'][0] == 1:
@@ -212,17 +213,17 @@ for _ in range(1,config['rounds']+1):
         print('上传文件 ( 可能会偶尔出现创建上传失败的情况 ) ')
         with open(xlspath,'rb') as f:
             UploadFile(a,filesname,f)
-        choosenum = random.randint(1,4) 
-        if config['allstart'] == 1 or choosenum == 1:
+        choosenum = random.sample(range(1, 5),2)
+        if config['allstart'] == 1 or 1 in choosenum:
             print('excel文件操作')
             excelWrite(a,filesname,'QVQ'+str(random.randint(1,600)))
-        if config['allstart'] == 1 or choosenum == 2:
+        if config['allstart'] == 1 or 2 in choosenum:
             print('team操作')
             teamWrite(a,'QVQ'+str(random.randint(1,600)))
-        if config['allstart'] == 1 or choosenum == 3:
+        if config['allstart'] == 1 or 3 in choosenum:
             print('task操作')
             taskWrite(a,'QVQ'+str(random.randint(1,600)))
-        if config['allstart'] == 1 or choosenum == 4:
+        if config['allstart'] == 1 or 4 in choosenum:
             print('onenote操作')
             onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
         print('-')
