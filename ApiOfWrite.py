@@ -146,7 +146,7 @@ def taskWrite(a,taskname):
     
 def teamWrite(a,channelname):
     #新建team
-    print('新建team')
+    print('    新建team')
     url=r'https://graph.microsoft.com/v1.0/teams'
     data={
          "template@odata.bind": "https://graph.microsoft.com/v1.0/teamsTemplates('standard')",
