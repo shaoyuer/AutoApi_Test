@@ -63,18 +63,22 @@ def apiReq(method,a,url,data='QAQ'):
             'Authorization': 'bearer ' + access_token,
             'Content-Type': 'application/json'
             }
-    if method == 'post':
-        posttext=req.post(url,headers=headers,data=data)
-    elif method == 'put':
-        posttext=req.put(url,headers=headers,data=data)
-    elif method == 'delete':
-        posttext=req.delete(url,headers=headers)
-    else :
-        posttext=req.get(url,headers=headers)
-    if posttext.status_code < 300:
-        print('        操作成功')
-    else:
-        print('        操作失败')
+    for retry_ in range(4):        
+        if method == 'post':
+            posttext=req.post(url,headers=headers,data=data)
+        elif method == 'put':
+            posttext=req.put(url,headers=headers,data=data)
+        elif method == 'delete':
+            posttext=req.delete(url,headers=headers)
+        else :
+            posttext=req.get(url,headers=headers)
+        if posttext.status_code < 300:
+            print('        操作成功')
+            break
+            #操作成功跳出循环
+        else:
+            if retry_ == 3 and posttext.status_code >= 300:
+                print('        操作失败')
 #    if posttext.status_code > 300:
 #        print('        操作失败')
 #        #成功不提示
