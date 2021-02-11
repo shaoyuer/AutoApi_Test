@@ -91,7 +91,7 @@ def runapi(apilist,a):
                 break
             else:
                 if apiget.status_code != 200 and retry_ == 3:
-                    print('    pass")
+                    print('    pass')
         if config['api_delay'][0] == 1:
             time.sleep(random.randint(config['api_delay'][1],config['api_delay'][2]))
 
