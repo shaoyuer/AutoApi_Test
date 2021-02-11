@@ -18,7 +18,7 @@ app_num=os.getenv('APP_NUM')
 # app_delay: 是否开启账号之间的延时，默认0关闭
 ########################################
 config = {
-         'allstart': 1,
+         'allstart': 0,
          'rounds': 1,
          'rounds_delay': [0,0,5],
          'api_delay': [0,0,5],
@@ -234,7 +234,7 @@ for _ in range(1,config['rounds']+1):
                 xlssheet.write(s1,s2,str(random.randint(1,600)))
         xls.close()
         xlspath=sys.path[0]+r'/'+filesname
-        print('上传文件 ( 可能会偶尔出现创建上传失败的情况 ) ')
+        print('上传文件')
         with open(xlspath,'rb') as f:
             UploadFile(a,filesname,f)
         choosenum = random.sample(range(1, 5),2)
