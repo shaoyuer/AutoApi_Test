@@ -41,14 +41,14 @@ def getmstoken(ms_token,appnum):
         'client_secret':client_secret,
         'redirect_uri':'http://localhost:53682/'
         }
-    for retry_ in range(4): 
+    for retry_ in range(4):
         html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=data,headers=headers)
         if html.status_code < 300:
             print(r'账号/应用 '+str(appnum)+' 的微软密钥获取成功')
             break
         else:
             if retry_ == 3:
-            print(r'账号/应用 '+str(appnum)+' 的微软密钥获取失败\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')            
+            print(r'账号/应用 '+str(appnum)+' 的微软密钥获取失败\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
     jsontxt = json.loads(html.text)       
     refresh_token = jsontxt['refresh_token']
     access_token = jsontxt['access_token']
