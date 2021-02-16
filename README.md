@@ -48,7 +48,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
 * **第二步，获取refresh_token(微软密钥)**
 
     * 两种选择：
-        *下载项目里的GetToken.html文件；或者本地新建html后缀文档，把GetToken.html的内容复制到里面。然后本地打开，根据里面提示获取refresh_token.
+        * 下载项目里的GetToken.html文件；或者本地新建html后缀文档，把GetToken.html的内容复制到里面。然后本地打开，根据里面提示获取refresh_token.
         * 进入[在线版](https://wangziyingwen.github.io/)，根据提示获取refresh_token
                
     
