@@ -18,7 +18,7 @@ app_num=os.getenv('APP_NUM')
 # app_delay: 是否开启账号之间的延时，默认0关闭
 ########################################
 config = {
-         'allstart': 0,
+         'allstart': 1,
          'rounds': 1,
          'rounds_delay': [0,0,5],
          'api_delay': [0,0,5],
