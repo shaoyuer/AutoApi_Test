@@ -1,4 +1,4 @@
-# AutoApi v6.2 (2021-2-11) ———— E5自动续期
+# AutoApi v6.3 (2021-2-18) ———— E5自动续期
 AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~~、~~AutoApiS(v4.0)~~、~~AutoApiP(v5.0)~~
 
 ## 说明 ##
@@ -35,7 +35,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
     
      ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/creatapp.png)
     
-    * 2）填入名字，‘受支持账户类型’选第三个，重定向填入 https://login.microsoftonline.com/common/oauth2/nativeclient ，点击**注册**
+    * 2）填入名字，“ 受支持账户类型 ”选第三个，“ 重定向url ”填入 https://login.microsoftonline.com/common/oauth2/nativeclient （不要按图片或者视频教程填，那是老版本的），点击**注册**
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/creatapp2.png)
     
@@ -49,7 +49,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
 
     * 两种选择：
         * 下载项目里的GetToken.html文件；或者本地新建html后缀文档，把GetToken.html的内容复制到里面。然后本地打开，根据里面提示获取refresh_token.
-        * 进入[在线版](https://wangziyingwen.github.io/)，根据提示获取refresh_token
+        * 进入**[在线版](https://wangziyingwen.github.io/)**，根据提示获取refresh_token
                
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApi/token地方.png)
@@ -108,6 +108,11 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      EMAIL
      ```shell
      收件邮箱 (自动发送天气邮件要用到)
+     ```
+     
+     REDIRECT_URL（这个不用设置，只是方便自定义人士选用）
+     ```shell
+     接受自定义重定向url，如果不想用微软提供的重定向uri(https://login.microsoftonline.com/common/oauth2/nativeclient)，可在此自定义
      ```
 
 
