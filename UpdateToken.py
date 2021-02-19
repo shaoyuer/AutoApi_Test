@@ -133,5 +133,5 @@ for a in range(0,app_count):
     client_secret=config['client_secret'][a]
     ms_token=config['ms_token'][a]
     config['ms_token'][a]=getmstoken(a)
-setsecret(createsecret(config,getpublickey()))
+setsecret(createsecret(json.dumps(config),getpublickey()))
 deletesecret()
