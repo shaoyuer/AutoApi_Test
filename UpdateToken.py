@@ -29,7 +29,7 @@ if config_add != '':
                 config[configkey[i]][int(config_add[0])-1]=config_add[i+1]
     else:
         for i in range(3):
-            config[configkey[i]][len(config['client_id'])]=config_add[i]
+            config[configkey[i]].append(config_add[i])
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
