@@ -3,7 +3,7 @@ import os
 import requests as req
 import json,sys,time,random
 
-if os.getenv('CONFIG')!='':
+if os.getenv('CONFIG')=='':
     print("<<<<<<<<<<<<<配置初始化中>>>>>>>>>>>>>")
     sys.exit()
 else:
