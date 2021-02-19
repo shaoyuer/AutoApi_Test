@@ -6,16 +6,24 @@ from base64 import b64encode
 from nacl import encoding, public
 
 configkey=['client_id','client_secret','ms_token']
-#config是否需要创建
+#config存在？
 if os.getenv('CONFIG')!='':
    config=json.loads(os.getenv('CONFIG'))
 else:
    config={'client_id':[],'client_secret':[],'ms_token':[]}
-#是否需要增加账号
+#更新？
 config_add=os.getenv('CONFIG_ADD').split(",")   
 if config_add != '':
-    for i in range(3):
-        config[configkey[i]][len(config['client_id'])]=config_add[i]
+    #替换or增加？
+    if is_number(config_add[0]):
+        if is_number(config_add[1]):
+            config['ms_token'][int(config_add[0])-1]=config_add[3]
+        else:
+            for i in range(3):
+                config[configkey[i]][int(config_add[0])-1]=config_add[i+1]
+    else:
+        for i in range(3):
+            config[configkey[i]][len(config['client_id'])]=config_add[i]
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
