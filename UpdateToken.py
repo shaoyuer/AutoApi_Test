@@ -12,7 +12,6 @@ if os.getenv('CONFIG')!='':
 else:
    config={'client_id':[],'client_secret':[],'ms_token':[]}
 #更新？
-if 
 config_add=os.getenv('CONFIG_ADD').split(",")
 def is_int(s):
     try:
@@ -31,7 +30,6 @@ if config_add != ['']:
     else:
         for i in range(3):
             config[configkey[i]].append(config_add[i])
- 
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
