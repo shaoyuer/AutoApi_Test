@@ -58,10 +58,9 @@ def getpublickey():
             if retry_ == 3:
                 print("公钥获取失败，请检查secret里 GH_TOKEN 格式与设置是否正确")
     jsontxt = json.loads(html.text)
-    public_key = jsontxt['key']
     global key_id 
     key_id = jsontxt['key_id']
-    return public_key
+    return jsontxt['key']
 
 #微软refresh_token获取
 def getmstoken(appnum):
@@ -91,7 +90,7 @@ def getmstoken(appnum):
 
 
 #token加密
-def createsecret(secret_value):
+def createsecret(secret_value,public_key):
     public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
     sealed_box = public.SealedBox(public_key)
     encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
@@ -129,12 +128,10 @@ def deletesecret():
                 print(r'CONFIG_ADD删除失败') 
  
 #调用 
-public_key=getpublickey()
 for a in range(0,app_count):
     client_id=config['client_id'][a]
     client_secret=config['client_secret'][a]
     ms_token=config['ms_token'][a]
     config['ms_token'][a]=getmstoken(a)
-encrypted_value=createsecret(config)
-setsecret(encrypted_value)
+setsecret(createsecret(config,getpublickey()))
 deletesecret()
