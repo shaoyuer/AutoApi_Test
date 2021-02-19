@@ -11,7 +11,6 @@ if os.getenv('CONFIG')!='':
    config=json.loads(os.getenv('CONFIG'))
 else:
    config={'client_id':[],'client_secret':[],'ms_token':[]}
-#更新？
 config_add=os.getenv('CONFIG_ADD').split(",")
 def is_int(s):
     try:
@@ -19,6 +18,7 @@ def is_int(s):
         return True
     except:
         return False
+#更新？
 if config_add != ['']:
     #替换or增加？
     if is_int(config_add[0]):
@@ -119,7 +119,6 @@ def deletesecret():
     for retry_ in range(4):
         putstatus=req.delete(deleteurl,headers=gs_headers)
         if putstatus.status_code < 300:
-            print(r'CONFIG_ADD删除成功')
             break
         else:
             if retry_ == 3:
@@ -132,4 +131,5 @@ for a in range(0,len(config['client_id'])):
     ms_token=config['ms_token'][a]
     config['ms_token'][a]=getmstoken(a)
 setsecret(createsecret(json.dumps(config),getpublickey()))
-deletesecret()
+if config_add != ['']:
+    deletesecret()
