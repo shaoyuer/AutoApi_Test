@@ -240,6 +240,8 @@ for a in range(0, int(app_count)):
     print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )')
     if emailaddress != '':
         sendEmail(a,'weather',weather)
+    else:
+        print("尚未配置邮箱")
 print('')
 #其他api
 for _ in range(1,config['rounds']+1):
