@@ -8,9 +8,9 @@ from nacl import encoding, public
 configkey=['client_id','client_secret','ms_token']
 #config存在？
 if os.getenv('CONFIG')!='':
-   config=json.loads(os.getenv('CONFIG'))
+    config=json.loads(os.getenv('CONFIG'))
 else:
-   config={'client_id':[],'client_secret':[],'ms_token':[]}
+    config={'client_id':[],'client_secret':[],'ms_token':[]}
 config_add=os.getenv('CONFIG_ADD').split(",")
 def is_int(s):
     try:
