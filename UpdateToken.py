@@ -12,11 +12,11 @@ if os.getenv('CONFIG')!='':
 else:
    config={'client_id':[],'client_secret':[],'ms_token':[]}
 #更新？
-config_add=os.getenv('CONFIG_ADD').split(",")   
+config_add=os.getenv('CONFIG_ADD').split(",")
 if config_add != '':
     #替换or增加？
-    if is_number(config_add[0]):
-        if is_number(config_add[1]):
+    if is_int(config_add[0]):
+        if is_int(config_add[1]):
             config['ms_token'][int(config_add[0])-1]=config_add[3]
         else:
             for i in range(3):
@@ -37,6 +37,13 @@ geturl=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/public-key'
 puturl=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/CONFIG'
 deleteurl=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/CONFIG_ADD'
 key_id='wangziyingwen'
+
+def is_int(s):
+    try:
+        int(s)
+        return True
+    except:
+        return False
 
 #公钥获取
 def getpublickey():
