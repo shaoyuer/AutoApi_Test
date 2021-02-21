@@ -132,8 +132,11 @@ def deletesecret(url_name):
 gh_public_key=getpublickey('public-key')
 for a in range(0,len(account['client_id'])):
     client_id=account['client_id'][a]
+    print(client_id)
     client_secret=account['client_secret'][a]
+    print(client_secret)
     ms_token=account['ms_token'][a]
+    print(ms_token)
     account['ms_token'][a]=getmstoken(a)
 setsecret('ACCOUNT',createsecret(json.dumps(account),gh_public_key))
 if os.getenv('EMAIL') != '' or os.getenv('TG_BOT') != '':
