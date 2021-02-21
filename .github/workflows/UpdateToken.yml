@@ -31,6 +31,7 @@ jobs:
         GH_REPO: ${{ github.repository }}
         ACCOUNT: ${{ secrets.ACCOUNT }} 
         ACCOUNT_ADD: ${{ secrets.ACCOUNT_ADD }} 
+        ACCOUNT_DEL: ${{ secrets.ACCOUNT_DEL }} 
         REDIRECT_URI: ${{ secrets.REDIRECT_URL }}   
         OTHER_CONFIG: ${{ secrets.OTHER_CONFIG }}  
         EMAIL: ${{ secrets.EMAIL }}  
