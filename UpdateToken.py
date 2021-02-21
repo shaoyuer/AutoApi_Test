@@ -40,13 +40,19 @@ if os.getenv('OTHER_CONFIG') =='':
 else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))
 if os.getenv('EMAIL') != '':
+    print('更新邮箱')
     other_config['email']=[]
     for i in range(2):    
         other_config['email'].append(os.getenv('EMAIL').split(',')[i])
 if os.getenv('TG_BOT') != '':
+    print('更新TG推送')
     other_config['tg_bot']=[]
     for i in range(2):    
         other_config['tg_bot'].append(os.getenv('TG_BOT').split(',')[i])
+#删除TG推送
+if os.getenv('TG_BOT') == ' ':
+    other_config['tg_bot']=[]
+    print('删除TG推送')
 gh_url=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/'
 key_id='wangziyingwen'
 print('<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>')

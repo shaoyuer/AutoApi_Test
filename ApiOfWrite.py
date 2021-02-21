@@ -312,11 +312,11 @@ for _ in range(1,config['rounds']+1):
             print('onenote操作')
             onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
         print('-')
-if other_config['tg_bot'] != ['','']:
+if other_config['tg_bot'] != []:
     content='AutoApi.W简报: '+'\n'
     for i in range(app_count):
         if log_list[i] != '':
             content=content+'账号 '+str(i)+' 失败api：'+log_list[i]+'\n'
         else:
-            content=content+'账号 '+str(i)+'所有api : OK'+'\n'
+            content=content+'账号 '+str(i)+' 所有api : OK'+'\n'
     sendTgBot(content)
