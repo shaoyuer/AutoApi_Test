@@ -38,8 +38,8 @@ if os.getenv('OTHER_CONFIG') =='':
     other_config={'email':[],'tg_bot':[]}
 else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
-for key_name in other_config:
-    key=key_name.upper()
+for key in list(other_config.keys()):
+    key=key.upper()
     print(os.getenv(key))
     if os.getenv(key) != '':
         other_config[key]=[]
