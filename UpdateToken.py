@@ -6,6 +6,7 @@ from base64 import b64encode
 from nacl import encoding, public
 
 gh_token=os.getenv('GH_TOKEN')
+gh_repo=os.getenv('GH_REPO')
 #账号信息生成
 accountkey=['client_id','client_secret','ms_token']
 #account存在？
