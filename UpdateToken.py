@@ -39,8 +39,7 @@ if os.getenv('OTHER_CONFIG') =='':
 else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
 for key in other_config:
-    key.upper()
-    print(key)
+    key=key.upper()
     print(os.getenv(key))
     if os.getenv(key) != '':
         other_config[key]=[]
