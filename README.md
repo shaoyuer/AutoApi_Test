@@ -83,7 +83,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/secret2.png)
     
-     ** 以下必须 （填入内容注意前后不要有空格空行）**
+ ** 以下必须 （填入内容注意前后不要有空格空行）**
  
      GH_TOKEN
      ```shell
@@ -98,7 +98,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      邮箱,城市        ( abc@xyz.com,Beijing     城市开头大写，自动发送天气邮件要用到)
      ```
      
-     ** 以下可选填 **
+ ** 以下可选填 **
      TG_BOT
      ```shell
      token,chat_id          ( 123....xyz,123456     TG推送，不需要请忽略。具体获取机器人token,chatid方法请自己搜索'TG推送' )
@@ -108,17 +108,17 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      接受自定义重定向url，如果不想用微软提供的重定向uri(https://login.microsoftonline.com/common/oauth2/nativeclient)，可在此自定义
      ```
      
-     ** 如何增加 / 更新账号 ？ **
-       * 增加账号：
-             直接新建 ACCOUNT_ADD 
+ ** 如何增加 / 更新账号 ？ **
+     * 增加账号：
+        直接新建 ACCOUNT_ADD 
 
-       * 更新账号：
-              先新建 ACCOUNT_DEL 删除账号，再新建 ACCOUNT_ADD 增加账号
+     * 更新账号：
+        先新建 ACCOUNT_DEL 删除账号，再新建 ACCOUNT_ADD 增加账号
               
-       ACCOUNT_DEL
-       ```shell
-       n       ( 删除第几个账号就填几 )
-       ```
+     ACCOUNT_DEL
+     ```shell
+     n                  ( 删除第几个账号就填几 )
+     ```
 ________________________________________________
 
 #### 试运行 ####
