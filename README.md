@@ -98,7 +98,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      邮箱,城市        ( abc@xyz.com,Beijing     城市开头大写，自动发送天气邮件要用到)
      ```
      
-     **以下可选填 **
+     **以下可选填**
      
      TG_BOT
      ```shell
