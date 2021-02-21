@@ -29,7 +29,6 @@ if account_add != ['']:
     print('增加账号中')
     for i in range(3):
         account[accountkey[i]].append(account_add[i])
-print(account)
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
@@ -59,13 +58,12 @@ def getmstoken(appnum):
     data={
          'grant_type': 'refresh_token',
          'refresh_token': ms_token,
-         'account_id':client_id,
-         'account_secret':client_secret,
+         'client_id':client_id,
+         'client_secret':client_secret,
          'redirect_uri':redirect_uri,
          }
     for retry_ in range(4):
         html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=data,headers=ms_headers)
-        print(html.text)
         #json.dumps失败
         if html.status_code < 300:
             print(r'    账号/应用 '+str(appnum+1)+' 的微软密钥获取成功')
@@ -132,11 +130,8 @@ def deletesecret(url_name):
 gh_public_key=getpublickey('public-key')
 for a in range(0,len(account['client_id'])):
     client_id=account['client_id'][a]
-    print(client_id)
     client_secret=account['client_secret'][a]
-    print(client_secret)
     ms_token=account['ms_token'][a]
-    print(ms_token)
     account['ms_token'][a]=getmstoken(a)
 setsecret('ACCOUNT',createsecret(json.dumps(account),gh_public_key))
 if os.getenv('EMAIL') != '' or os.getenv('TG_BOT') != '':
