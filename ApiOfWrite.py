@@ -318,5 +318,5 @@ if other_config['tg_bot'] != ['','']:
         if log_list[i] != '':
             content=content+'账号 '+str(i)+' 失败api：'+log_list[i]
         else:
-            content=content+'所有api : OK'
+            content=content+'账号 '+str(i)+'所有api : OK'
     sendTgBot(content)
