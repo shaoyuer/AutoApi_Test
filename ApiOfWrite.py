@@ -10,6 +10,7 @@ if os.getenv('ACCOUNT')=='':
 else:
     account=json.loads(os.getenv('ACCOUNT'))
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
+print(other_config)
 if account == {'client_id':[],'client_secret':[],'ms_token':[]}:
     print("尚未设置账号")
     sys.exit()  
