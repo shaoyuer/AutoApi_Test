@@ -77,7 +77,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
   
  * **第三步，新建secret**
  
-    * 1）依次点击页面上栏右边的 Setting -> 左栏 Secrets -> 右上 New repository secret，新建6个secret： **GH_TOKEN , ACCOUNT_ADD , EMAIL , TG_BOT**  
+    * 1）依次点击页面上栏右边的 Setting -> 左栏 Secrets -> 右上 New repository secret，新建3个secret： **GH_TOKEN , ACCOUNT_ADD , EMAIL**  
    
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/setting.png)
     
@@ -108,7 +108,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      接受自定义重定向url，如果不想用微软提供的重定向uri(https://login.microsoftonline.com/common/oauth2/nativeclient)，可在此自定义
      ```
      
-     ** 增加 / 更新账号 **
+     ** 如何增加 / 更新账号 ？ **
        * 增加账号：
              直接新建 ACCOUNT_ADD 
 
