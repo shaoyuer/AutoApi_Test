@@ -38,13 +38,15 @@ other_config=os.getenv('OTHER_CONFIG')
 if os.getenv('OTHER_CONFIG') =='':
     other_config={'email':[],'tg_bot':[]}
 else:
-    other_config=json.loads(os.getenv('OTHER_CONFIG'))  
-for key in list(other_config.keys()):
-    key=key.upper()
-    if os.getenv(key) != '':
-        other_config[key]=[]
-        for i in range(2):
-            other_config[key].append(os.getenv(key).split(',')[i])
+    other_config=json.loads(os.getenv('OTHER_CONFIG'))
+if os.getenv('EMAIL') != '':
+    other_config['email']=[]
+    for i in range(2):    
+        other_config['email'].append(os.getenv('EMAIL').split(',')[i])
+if os.getenv('TG_BOT') != '':
+    other_config['tg_bot']=[]
+    for i in range(2):    
+        other_config['tg_bot'].append(os.getenv('TG_BOT').split(',')[i])
 gh_url=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/'
 key_id='wangziyingwen'
 print('<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>')
