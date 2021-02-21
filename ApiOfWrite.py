@@ -109,7 +109,7 @@ def sendEmail(a,subject,content):
                 'message':{
                           'subject': subject,
                           'body': {'contentType': 'Text', 'content': content},
-                          'toRecipients': [{'emailAddress': {'address': emailaddress}}],
+                          'toRecipients': [{'emailAddress': {'address': other_config['email'][0]}}],
                           },
                 'saveToSentItems': 'true',
                 }            
