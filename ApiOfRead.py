@@ -5,10 +5,13 @@ import json,sys,time,random
 
 if os.getenv('ACCOUNT')=='':
     print("<<<<<<<<<<<<<配置初始化中>>>>>>>>>>>>>")
-    sys.exit()
+    sys.exit()   
 else:
     account=json.loads(os.getenv('ACCOUNT'))
-    other_config=json.loads(os.getenv('OTHER_CONFIG'))  
+    other_config=json.loads(os.getenv('OTHER_CONFIG'))
+if account == {'client_id':[],'client_secret':[],'ms_token':[]}:
+    print("尚未设置账号")
+    sys.exit()  
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
     redirect_uri = r'https://login.microsoftonline.com/common/oauth2/nativeclient'
@@ -83,7 +86,7 @@ def getmstoken(appnum):
         else:
             if retry_ == 3:
                 print(r'账号/应用 '+str(appnum+1)+' 的微软密钥获取失败\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
-                if other_config['tg_bot'] != ['','']:
+                if other_config['tg_bot'] != []:
                     sendTgBot('AutoApi简报：'+'\n'+r'账号 '+str(appnum+1)+' token获取失败，运行中断')
     jsontxt = json.loads(html.text)
     return jsontxt['access_token']
@@ -168,7 +171,7 @@ for r in range(1,config['rounds']+1):
             print("原版顺序,共十个api,自己数")
             apilist=[5,9,8,1,20,24,23,6,21,22]
         runapi(a)
-if other_config['tg_bot'] != ['','']:
+if other_config['tg_bot'] != []:
     content='AutoApi.R简报: '+'\n'
     for i in range(app_count):
         content=content+'账号： '+str(i)+' 成功 '+str(len(apilist)-log_list[i])+' 个，'+'失败 '+str(log_list[i])+' 个'+'\n'

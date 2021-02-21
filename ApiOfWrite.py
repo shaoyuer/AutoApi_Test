@@ -10,6 +10,9 @@ if os.getenv('ACCOUNT')=='':
 else:
     account=json.loads(os.getenv('ACCOUNT'))
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
+if account == {'client_id':[],'client_secret':[],'ms_token':[]}:
+    print("尚未设置账号")
+    sys.exit()  
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
     redirect_uri = r'https://login.microsoftonline.com/common/oauth2/nativeclient'

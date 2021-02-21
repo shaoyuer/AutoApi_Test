@@ -16,10 +16,10 @@ else:
 account_add=os.getenv('ACCOUNT_ADD').split(",")
 account_del=os.getenv('ACCOUNT_DEL')
 #更新？
-if account_delete != '' or account_add != [''] :
+if account_del != '' or account_add != [''] :
     print('<<<<<<<<<<<<<<<配置信息更新中>>>>>>>>>>>>>>')
 #删除？
-if account_delete != '':
+if account_del != '':
     print('删除账号中')
     for i in range(3):
         del account[accountkey[i]][int(account_del)-1]
@@ -36,12 +36,12 @@ if redirect_uri =='':
 #其他配置生成   
 other_config=os.getenv('OTHER_CONFIG')
 if os.getenv('OTHER_CONFIG') =='':
-    other_config={'email':['',''],'tg_bot':['','']}
+    other_config={'email':[],'tg_bot':[]}
 else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
 for key in other_config:
     if os.getenv(key) != '':
-        other_config[key]=['','']
+        other_config[key]=[]
         for i in range(2):
             other_config[key].append(os.getenv(key).split(',')[i])
 gh_url=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/'
