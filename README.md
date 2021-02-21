@@ -83,7 +83,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/secret2.png)
     
-     **以下必须 （填入内容注意前后不要有空格空行**
+     **以下必须 （填入内容注意前后不要有空格空行）**
  
      GH_TOKEN
      ```shell
@@ -113,7 +113,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      * 增加账号：
           直接新建 ACCOUNT_ADD 
      * 更新账号：
-          先新建 ACCOUNT_DEL 删除账号，再新建 ACCOUNT_ADD 增加账号
+          新建两个secret,  ACCOUNT_DEL 以删除账号， ACCOUNT_ADD 增加账号
               
      ACCOUNT_DEL
      ```shell
