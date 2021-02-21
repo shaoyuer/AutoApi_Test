@@ -109,7 +109,7 @@ def sendEmail(a,subject,content):
                           },
                 'saveToSentItems': 'true',
                 }            
-    if apiReq('post',a,url,json.dumps(mailmessage)) == 0
+    if apiReq('post',a,url,json.dumps(mailmessage)) == 0:
         log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         
     	

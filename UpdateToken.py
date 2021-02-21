@@ -93,7 +93,7 @@ def getpublickey(url_name):
     return jsontxt['key']
 
 #token加密
-def createsecret(secret_value，public_key):
+def createsecret(secret_value,public_key):
     public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
     sealed_box = public.SealedBox(public_key)
     encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
