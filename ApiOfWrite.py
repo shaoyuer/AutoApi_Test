@@ -217,7 +217,7 @@ def onenoteWrite(a,notename):
         data={
              "displayName": notename,
              }
-        notetxt = json.loads(apiReq('post',a,url,json.dumps(data)))
+        notetxt = json.loads(apiReq('post',a,url,json.dumps(data)).text)
         print('    创建笔记本分区')
         url=r'https://graph.microsoft.com/v1.0/me/onenote/notebooks/'+notetxt['id']+r'/sections'
         data={
