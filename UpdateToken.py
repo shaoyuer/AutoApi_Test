@@ -44,7 +44,7 @@ if os.getenv('EMAIL') != '':
     other_config['email']=[]
     for i in range(2):    
         other_config['email'].append(os.getenv('EMAIL').split(',')[i])
-if os.getenv('TG_BOT') != '':
+if os.getenv('TG_BOT') != '' and os.getenv('TG_BOT') != ' ':
     print('更新TG推送')
     other_config['tg_bot']=[]
     for i in range(2):    
