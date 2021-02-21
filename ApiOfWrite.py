@@ -85,19 +85,18 @@ def apiReq(method,a,url,data='QAQ'):
             posttext=req.get(url,headers=headers)
         if posttext.status_code < 300:
             print('        操作成功')
-            return 1
+            break
             #操作成功跳出循环
         else:
             if retry_ == 3:
                 print('        操作失败')
-                return 0
-                
+        return posttext     
           
 
 #上传文件到onedrive(小于4M)
 def uploadFile(a,filesname,f):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/content'
-    if apiReq('put',a,url,f) == 0:
+    if apiReq('put',a,url,f).status_code >= 300 :
         log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
     
         
@@ -112,7 +111,7 @@ def sendEmail(a,subject,content):
                           },
                 'saveToSentItems': 'true',
                 }            
-    if apiReq('post',a,url,json.dumps(mailmessage)) == 0:
+    if apiReq('post',a,url,json.dumps(mailmessage)).status_code >= 300 :
         log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         
     	
