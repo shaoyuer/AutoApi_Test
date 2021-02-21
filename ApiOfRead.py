@@ -177,7 +177,7 @@ for r in range(1,config['rounds']+1):
 if other_config['tg_bot'] != []:
     content='AutoApi.R简报: '+'\n'
     for i in range(app_count):
-        content=content+'账号 '+str(i)+' ：成功 '+str(len(apilist)*config['rounds']-log_list[i])+r'/'+str(len(apilist)*config['rounds']+' 个，'+'失败 '+str(log_list[i])+' 个'+'\n'
+        content=content+'账号 '+str(i)+' ：成功 '+str(len(apilist)*config['rounds']-log_list[i])+r'/'+str(len(apilist)*config['rounds'])+' 个，'+'失败 '+str(log_list[i])+' 个'+'\n'
     sendTgBot(content)
     
     
