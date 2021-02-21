@@ -1,5 +1,5 @@
-#每周1，4，6自动更新refresh_token
-name: Update Token
+#创建系列api，每天调用一次
+name: Run Api.Write
 
 on: 
   release:
@@ -10,7 +10,7 @@ on:
   #  branches: 
   #    - master
   schedule:
-    - cron: '10 10 * * 1,4,6'
+    - cron: '12 23 * * *'
   watch:
     types: [started]
    
@@ -21,19 +21,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Install requests and nacl #安装requests和nacl模块
+    - name: Install requests and xlsxwriter #安装模块
       run: |
         pip install requests
-        pip install PyNaCl
-    - name: update secrets #更新token到secret
-      env: 
+        pip install xlsxwriter
+    - name: run api.Write #api调用
+      env:              
+        #总储存变量
+        ACCOUNT: ${{ secrets.ACCOUNT }}
+        OTHER_CONFIG: ${{ secrets.OTHER_CONFIG }} 
+        #临时变量
+        EMAIL: ${{ secrets.E_MAIL }} 
+        TG_BOT: ${{ secrets.TG_BOT }} 
         GH_TOKEN: ${{ secrets.GH_TOKEN }} 
         GH_REPO: ${{ github.repository }}
-        ACCOUNT: ${{ secrets.ACCOUNT }} 
-        ACCOUNT_ADD: ${{ secrets.ACCOUNT_ADD }} 
+        #非必要变量
         REDIRECT_URI: ${{ secrets.REDIRECT_URL }}   
-        OTHER_CONFIG: ${{ secrets.OTHER_CONFIG }}  
-        EMAIL: ${{ secrets.EMAIL }}  
-        TG_BOT: ${{ secrets.TG_BOT }}  
       run: |
-        python UpdateToken.py
+        python ApiOfWrite.py

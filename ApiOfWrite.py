@@ -4,22 +4,18 @@ import xlsxwriter
 import requests as req
 import json,sys,random
 
-if os.getenv('CONFIG')=='':
+if os.getenv('ACCOUNT')=='':
     print("<<<<<<<<<<<<<配置初始化中>>>>>>>>>>>>>")
     sys.exit()
 else:
-    config=json.loads(os.getenv('CONFIG'))
-email_config=os.getenv('EMAIL').split(",")
-emailaddress=email_config[0]
-if len(email_config) > 1 and email_config[1] != '':
-    city=email_config[1]
-else:
-    city='Beijing'
+    account=json.loads(os.getenv('ACCOUNT'))
+    other_config=json.loads(os.getenv('OTHER_CONFIG'))  
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
     redirect_uri = r'https://login.microsoftonline.com/common/oauth2/nativeclient'
-app_count=len(config['client_id'])
-access_token_list=['wangziyingwen']*int(app_count)
+app_count=len(account['client_id'])
+access_token_list=['wangziyingwen']*app_count
+log_list=['']*app_count
 ###########################
 # config选项说明
 # 0：关闭  ， 1：开启
@@ -58,6 +54,8 @@ def getmstoken(appnum):
         else:
             if retry_ == 3:
                 print(r'账号/应用 '+str(appnum)+' 的微软密钥获取失败\n'+'请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
+                if other_config['tg_bot'] != ['','']:
+                    sendTgBot('AutoApi简报：'+'\n'+r'账号 '+str(appnum+1)+' token获取失败，运行中断')    
     jsontxt = json.loads(html.text)       
     return jsontxt['access_token']
 
@@ -84,18 +82,20 @@ def apiReq(method,a,url,data='QAQ'):
             posttext=req.get(url,headers=headers)
         if posttext.status_code < 300:
             print('        操作成功')
-            break
+            return 1
             #操作成功跳出循环
         else:
             if retry_ == 3:
                 print('        操作失败')
-    return posttext.text
+                return 0
+                
           
 
 #上传文件到onedrive(小于4M)
 def uploadFile(a,filesname,f):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/content'
-    apiReq('put',a,url,f)
+    if apiReq('put',a,url,f) == 0:
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
     
         
 # 发送邮件到自定义邮箱
@@ -109,7 +109,10 @@ def sendEmail(a,subject,content):
                           },
                 'saveToSentItems': 'true',
                 }            
-    apiReq('post',a,url,json.dumps(mailmessage))	
+    if apiReq('post',a,url,json.dumps(mailmessage)) == 0
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
+        
+    	
 	
 #修改excel(这函数分离好像意义不大)
 #api-获取itemid: https://graph.microsoft.com/v1.0/me/drive/root/search(q='.xlsx')?select=name,id,webUrl
@@ -140,6 +143,7 @@ def excelWrite(a,filesname,sheet):
         apiReq('post',a,url,json.dumps(data))
     except:
         print("        操作中断")
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         return 
     
 def taskWrite(a,taskname):
@@ -164,6 +168,7 @@ def taskWrite(a,taskname):
         apiReq('delete',a,url)
     except:
         print("        操作中断")
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         return 
     
 def teamWrite(a,channelname):
@@ -200,6 +205,7 @@ def teamWrite(a,channelname):
                 apiReq('delete',a,url)  
     except:
         print("        操作中断")
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         return 
         
 def onenoteWrite(a,notename):
@@ -221,13 +227,33 @@ def onenoteWrite(a,notename):
         apiReq('delete',a,url)
     except:
         print("        操作中断")
+        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
         return 
-    
+        
+def sendTgBot(content):
+    headers={
+            'Content-Type': 'application/json'
+            }
+    data={
+         'chat_id':other_config['tg_bot'][1],
+         'text':content,
+         'parse_mode':'HTML'
+         }  
+    for retry_ in range(4):  
+        posttext=req.post(r'https://api.telegram.org/bot'+other_config['tg_bot'][0]+r'/sendMessage',headers=headers,data=json.dumps(data))
+        if posttext.status_code < 300:
+             print('tg推送成功')
+             break
+        else:
+            if retry_ == 3:
+                print('tg推送失败')
+    print('')
+
 #一次性获取access_token，降低获取率
-for a in range(0, int(app_count)):
-    client_id=config['client_id'][a]
-    client_secret=config['client_secret'][a]
-    ms_token=config['ms_token'][a]
+for a in range(0, app_count):
+    client_id=account['client_id'][a]
+    client_secret=account['client_secret'][a]
+    ms_token=account['ms_token'][a]
     access_token_list[a]=getmstoken(a)
 print('')    
 #获取天气
@@ -235,10 +261,14 @@ headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 
 #实际运行
-for a in range(0, int(app_count)):
+for a in range(0, app_count):
     print('账号 '+str(a+1))
     print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )')
-    if emailaddress != '':
+    if other_config['email'][0] != '':
+        if other_config['email'][1] == '':
+            city='Beijing'
+        else:
+            city=other_config['email'][1]
         sendEmail(a,'weather',weather)
     else:
         print("尚未配置邮箱")
@@ -247,7 +277,7 @@ print('')
 for _ in range(1,config['rounds']+1):
     timeDelay('rounds_delay')  
     print('第 '+str(_)+' 轮\n')        
-    for a in range(0, int(app_count)):
+    for a in range(0, app_count):
         timeDelay('app_delay')    
         print('账号 '+str(a+1))    
         #生成随机名称
@@ -277,3 +307,11 @@ for _ in range(1,config['rounds']+1):
             print('onenote操作')
             onenoteWrite(a,'QVQ'+str(random.randint(1,600)))
         print('-')
+if other_config['tg_bot'] != ['','']:
+    content='AutoApi.W简报: '+'\n'+
+    for i in range(app_count):
+        if log_list[i] != '':
+            content=content+'账号： '+str(i)+' 失败api：'+log_list[i]
+        else:
+            content=content+'所有api : OK'
+    sendTgBot(content)

@@ -28,7 +28,8 @@ jobs:
       env: 
         GH_TOKEN: ${{ secrets.GH_TOKEN }} 
         GH_REPO: ${{ github.repository }}
-        CONFIG: ${{ secrets.CONFIG }} 
+        ACCOUNT: ${{ secrets.ACCOUNT }} 
         REDIRECT_URI: ${{ secrets.REDIRECT_URL }}   
+        OTHER_CONFIG: ${{ secrets.OTHER_CONFIG }}  
       run: |
         python ApiOfRead.py
