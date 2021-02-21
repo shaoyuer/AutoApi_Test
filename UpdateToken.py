@@ -42,9 +42,8 @@ else:
 for key in other_config:
     if os.getenv(key) != '':
         other_config[key]=['','']
-        for i in range(2)
+        for i in range(2):
             other_config[key].append(os.getenv(key).split(',')[i])
-
 gh_url=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/'
 key_id='wangziyingwen'
 
