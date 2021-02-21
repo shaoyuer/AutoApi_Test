@@ -18,7 +18,7 @@ account_add=os.getenv('ACCOUNT_ADD').split(",")
 account_del=os.getenv('ACCOUNT_DEL')
 #更新？
 if account_del != '' or account_add != [''] :
-    print('<<<<<<<<<<<<<<<配置信息更新中>>>>>>>>>>>>>>')
+    print('<<<<<<<<<<<<<<<配置信息更新中>>>>>>>>>>>>>>>')
 #删除？
 if account_del != '':
     print('删除账号中')
@@ -41,14 +41,13 @@ else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
 for key in list(other_config.keys()):
     key=key.upper()
-    print(os.getenv(key))
     if os.getenv(key) != '':
         other_config[key]=[]
         for i in range(2):
             other_config[key].append(os.getenv(key).split(',')[i])
 gh_url=r'https://api.github.com/repos/'+gh_repo+r'/actions/secrets/'
 key_id='wangziyingwen'
-
+print('<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>')
 #微软refresh_token获取
 def getmstoken(appnum):
     #try:except?
@@ -66,11 +65,11 @@ def getmstoken(appnum):
         html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=data,headers=ms_headers)
         #json.dumps失败
         if html.status_code < 300:
-            print(r'    账号/应用 '+str(appnum+1)+' 的微软密钥获取成功')
+            print(r'账号/应用 '+str(appnum+1)+' 的微软密钥获取成功')
             break
         else:
             if retry_ == 3:
-                print(r'    账号/应用 '+str(appnum+1)+' 的微软密钥获取失败'+'\n'+'请检查secret里 account_ID , account_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
+                print(r'账号/应用 '+str(appnum+1)+' 的微软密钥获取失败'+'\n'+'请检查secret里 account_ID , account_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
     jsontxt = json.loads(html.text)
     refresh_token = jsontxt['refresh_token']
     return refresh_token
@@ -84,11 +83,11 @@ def getpublickey(url_name):
     for retry_ in range(4):
         html = req.get(gh_url+url_name,headers=gh_headers)
         if html.status_code < 300:
-            print("    公钥获取成功")
+            print("公钥获取成功")
             break
         else:
             if retry_ == 3:
-                print("    公钥获取失败，请检查secret里 GH_TOKEN 格式与设置是否正确")
+                print("公钥获取失败，请检查secret里 GH_TOKEN 格式与设置是否正确")
     jsontxt = json.loads(html.text)
     global key_id 
     key_id = jsontxt['key_id']
@@ -110,21 +109,19 @@ def setsecret(url_name,encrypted_value):
     for retry_ in range(4):
         putstatus=req.put(gh_url+url_name,headers=gh_headers,data=json.dumps(data))
         if putstatus.status_code < 300:
-            print(r'    账号配置更新成功')
+            print(r'账号配置更新成功')
             break
         else:
             if retry_ == 3:
-                print(r'    账号配置更新失败，请检查secret里 GH_TOKEN 格式与设置是否正确')        
+                print(r'账号配置更新失败，请检查secret里 GH_TOKEN 格式与设置是否正确')        
 
 #secret删除
 def deletesecret(url_name):
     for retry_ in range(4):
         putstatus=req.delete(gh_url+url_name,headers=gh_headers)
         if putstatus.status_code < 300:
-            print('secrect变量删除成功')
+            print('--')
             break
-        else:
-            print('删除跳过')
  
 #调用 
 gh_public_key=getpublickey('public-key')
@@ -137,7 +134,6 @@ setsecret('ACCOUNT',createsecret(json.dumps(account),gh_public_key))
 if os.getenv('EMAIL') != '' or os.getenv('TG_BOT') != '':
     setsecret('OTHER_CONFIG',createsecret(json.dumps(other_config),gh_public_key))
  
-print('删除多余信息')
 deletesecret('EMAIL')
 deletesecret('TG_BOT')
 deletesecret('ACCOUNT_ADD')
