@@ -28,7 +28,6 @@ if account_add != ['']:
     print('增加账号中')
     for i in range(3):
         account[accountkey[i]].append(account_add[i])
-print('更新微软密钥')
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
@@ -40,6 +39,7 @@ if os.getenv('OTHER_CONFIG') =='':
 else:
     other_config=json.loads(os.getenv('OTHER_CONFIG'))  
 for key in other_config:
+    print(key+' '+type(key))
     if os.getenv(key) != '':
         other_config[key]=[]
         for i in range(2):
