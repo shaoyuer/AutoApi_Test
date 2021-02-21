@@ -102,7 +102,7 @@ AutoApi系列：~~AutoApi(v1.0)~~、~~AutoApiSecret(v2.0)~~、~~AutoApiSR(v3.0)~
      
      TG_BOT
      ```shell
-     token,chat_id          ( 123....xyz,123456     TG推送，不需要请忽略。具体获取机器人token,chatid方法请自己搜索'TG推送' )
+     token,chat_id          ( 123....xyz,123456     TG推送，具体获取token,chatid方法请自己搜索'TG推送' 。如果中途不想推送了，新建 TG_BOT secret，里面输入一个空格 )
      ```    
      REDIRECT_URL（这个不用设置，只是方便自定义人士选用）
      ```shell

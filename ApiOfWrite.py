@@ -32,7 +32,7 @@ log_list=['']*app_count
 # app_delay: 是否开启账号之间的延时，默认0关闭
 ########################################
 config = {
-         'allstart': 1,
+         'allstart': 0,
          'rounds': 1,
          'rounds_delay': [0,0,5],
          'api_delay': [0,0,5],
@@ -100,7 +100,8 @@ def apiReq(method,a,url,data='QAQ'):
 def uploadFile(a,filesname,f):
     url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/content'
     if apiReq('put',a,url,f).status_code >= 300 :
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
     
         
 # 发送邮件到自定义邮箱
@@ -115,8 +116,8 @@ def sendEmail(a,subject,content):
                 'saveToSentItems': 'true',
                 }            
     if apiReq('post',a,url,json.dumps(mailmessage)).status_code >= 300 :
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
-        
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
     	
 	
 #修改excel(这函数分离好像意义不大)
@@ -148,7 +149,8 @@ def excelWrite(a,filesname,sheet):
         apiReq('post',a,url,json.dumps(data))
     except:
         print("        操作中断")
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
         return 
     
 def taskWrite(a,taskname):
@@ -173,7 +175,8 @@ def taskWrite(a,taskname):
         apiReq('delete',a,url)
     except:
         print("        操作中断")
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
         return 
     
 def teamWrite(a,channelname):
@@ -210,7 +213,8 @@ def teamWrite(a,channelname):
                 apiReq('delete',a,url)  
     except:
         print("        操作中断")
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
         return 
         
 def onenoteWrite(a,notename):
@@ -232,8 +236,9 @@ def onenoteWrite(a,notename):
         apiReq('delete',a,url)
     except:
         print("        操作中断")
-        log_list[a]=log_list[a]+sys._getframe().f_code.co_name+' ,'
-        return 
+        if sys._getframe().f_code.co_name not in log_list[a]:
+            log_list[a]=log_list[a]+sys._getframe().f_code.co_name+','
+        return
         
 def sendTgBot(content):
     headers={
@@ -316,7 +321,7 @@ if other_config['tg_bot'] != []:
     content='AutoApi.W简报: '+'\n'
     for i in range(app_count):
         if log_list[i] != '':
-            content=content+'账号 '+str(i)+' 失败api：'+log_list[i]+'\n'
+            content=content+'账号 '+str(i)+' 失败 api：'+log_list[i]+'\n'
         else:
-            content=content+'账号 '+str(i)+' 所有api : OK'+'\n'
+            content=content+'账号 '+str(i)+' 所有 api : OK'+'\n'
     sendTgBot(content)
