@@ -260,6 +260,10 @@ for a in range(0, app_count):
     access_token_list[a]=getmstoken(a)
 print('')    
 #获取天气
+if len(other_config['email']) <= 1:
+    city='Beijing'
+else:
+    city=other_config['email'][1]
 headers={'Accept-Language': 'zh-CN'}
 weather=req.get(r'http://wttr.in/'+city+r'?format=4&?m',headers=headers).text
 
@@ -268,10 +272,6 @@ for a in range(0, app_count):
     print('账号 '+str(a+1))
     print('发送邮件 ( 邮箱单独运行，每次运行只发送一次，防止封号 )')
     if other_config['email'][0] != '':
-        if other_config['email'][1] == '':
-            city='Beijing'
-        else:
-            city=other_config['email'][1]
         sendEmail(a,'weather',weather)
     else:
         print("尚未配置邮箱")
