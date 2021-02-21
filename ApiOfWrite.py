@@ -29,7 +29,7 @@ log_list=['']*app_count
 # app_delay: 是否开启账号之间的延时，默认0关闭
 ########################################
 config = {
-         'allstart': 0,
+         'allstart': 1,
          'rounds': 1,
          'rounds_delay': [0,0,5],
          'api_delay': [0,0,5],
@@ -132,7 +132,7 @@ def excelWrite(a,filesname,sheet):
              "address": "A1:D8",
              "hasHeaders": False
              }
-        jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)))
+        jsontxt=json.loads(apiReq('post',a,url,json.dumps(data)).text)
         print('    添加行')
         url=r'https://graph.microsoft.com/v1.0/me/drive/root:/AutoApi/App'+str(a)+r'/'+filesname+r':/workbook/tables/'+jsontxt['id']+r'/rows/add'
         rowsvalues=[[0]*4]*2
@@ -155,13 +155,13 @@ def taskWrite(a,taskname):
         data={
              "displayName": taskname
              }
-        listjson=json.loads(apiReq('post',a,url,json.dumps(data)))
+        listjson=json.loads(apiReq('post',a,url,json.dumps(data)).text)
         print("    创建任务")
         url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks'
         data={
              "title": taskname,
              }
-        taskjson=json.loads(apiReq('post',a,url,json.dumps(data)))
+        taskjson=json.loads(apiReq('post',a,url,json.dumps(data)).text)
         print("    删除任务")
         url=r'https://graph.microsoft.com/v1.0/me/todo/lists/'+listjson['id']+r'/tasks/'+taskjson['id']
         apiReq('delete',a,url)
@@ -186,7 +186,7 @@ def teamWrite(a,channelname):
         apiReq('post',a,url,json.dumps(data))
         print("    获取team信息")
         url=r'https://graph.microsoft.com/v1.0/me/joinedTeams'
-        teamlist = json.loads(apiReq('get',a,url))
+        teamlist = json.loads(apiReq('get',a,url).text)
         for teamcount in range(teamlist['@odata.count']):
             if teamlist['value'][teamcount]['displayName'] == channelname:
                 #创建频道
@@ -197,7 +197,7 @@ def teamWrite(a,channelname):
                      "membershipType": "standard"
                      }
                 url=r'https://graph.microsoft.com/v1.0/teams/'+teamlist['value'][teamcount]['id']+r'/channels'
-                jsontxt = json.loads(apiReq('post',a,url,json.dumps(data)))
+                jsontxt = json.loads(apiReq('post',a,url,json.dumps(data)).text)
                 url=r'https://graph.microsoft.com/v1.0/teams/'+teamlist['value'][teamcount]['id']+r'/channels/'+jsontxt['id']
                 print("    删除team频道")
                 apiReq('delete',a,url)
