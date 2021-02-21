@@ -3,7 +3,7 @@ import os
 import requests as req
 import json,sys,time,random
 
-if os.getenv('ACCOUNT')=='':
+if os.getenv('ACCOUNT')== '' or os.getenv('OTHER_CONFIG') == '':
     print("<<<<<<<<<<<<<配置初始化中>>>>>>>>>>>>>")
     sys.exit()   
 else:
@@ -174,7 +174,7 @@ for r in range(1,config['rounds']+1):
 if other_config['tg_bot'] != []:
     content='AutoApi.R简报: '+'\n'
     for i in range(app_count):
-        content=content+'账号： '+str(i)+' 成功 '+str(len(apilist)-log_list[i])+' 个，'+'失败 '+str(log_list[i])+' 个'+'\n'
+        content=content+'账号 '+str(i)+' ：成功 '+str(len(apilist)-log_list[i])+' 个，'+'失败 '+str(log_list[i])+' 个'+'\n'
     sendTgBot(content)
     
     

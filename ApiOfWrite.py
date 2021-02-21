@@ -315,7 +315,7 @@ if other_config['tg_bot'] != ['','']:
     content='AutoApi.W简报: '+'\n'
     for i in range(app_count):
         if log_list[i] != '':
-            content=content+'账号： '+str(i)+' 失败api：'+log_list[i]
+            content=content+'账号 '+str(i)+' ：失败api：'+log_list[i]
         else:
             content=content+'所有api : OK'
     sendTgBot(content)
