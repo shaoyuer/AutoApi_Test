@@ -32,8 +32,7 @@ if account_add != ['']:
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
-    redirect_uri = r'https://login.microsoftonline.com/common/oauth2/nativeaccount' 
-print(redirect_uri)    
+    redirect_uri = r'https://login.microsoftonline.com/common/oauth2/nativeclient'  
 #其他配置生成   
 other_config=os.getenv('OTHER_CONFIG')
 if os.getenv('OTHER_CONFIG') =='':
@@ -65,7 +64,6 @@ def getmstoken(appnum):
          }
     for retry_ in range(4):
         html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=data,headers=ms_headers)
-        print(html.text)
         #json.dumps失败
         if html.status_code < 300:
             print(r'    账号/应用 '+str(appnum+1)+' 的微软密钥获取成功')
