@@ -29,6 +29,7 @@ if account_add != ['']:
     print('增加账号中')
     for i in range(3):
         account[accountkey[i]].append(account_add[i])
+print(account_add)
 #自定义url?
 redirect_uri=os.getenv('REDIRECT_URI')
 if redirect_uri =='':
