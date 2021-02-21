@@ -90,7 +90,7 @@ def apiReq(method,a,url,data='QAQ'):
         else:
             if retry_ == 3:
                 print('        操作失败')
-        return posttext     
+    return posttext     
           
 
 #上传文件到onedrive(小于4M)
